@@ -61,7 +61,7 @@
   )
 
 @HIS.data.things.waterExtractor = @HIS.buildDef(100, ['advancedPrinter'], 12, 8, 100, 150, 500, 
-    @HIS.maintenanceDef(10, 3, 
+    @HIS.maintenanceDef(10, 3, 0,
       @HIS.dataDef('waterExtractor', 'Water Extractor', 'waterExtractor.png', ['energy', 'robots'])
     )
   )
@@ -107,7 +107,7 @@
   )
 
 @HIS.data.things.advancedPrinter = @HIS.buildDef(100, ['basicPrinter'], 7, 5, 300, 350, 250,
-    @HIS.maintenanceDef(30, 10,
+    @HIS.maintenanceDef(30, 10, 0,
       @HIS.dataDef('advancedPrinter', 'Advanced 3D Printer', 'advancedPrinter.png', ['factory', 'energy', 'robots'])
     )
   )
