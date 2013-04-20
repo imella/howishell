@@ -57,6 +57,11 @@
 .advisor {
     display: inline-block;
     width: 130px;
+	margin: 20px;
+}
+
+#advisors {
+  padding: 100px 150px;
 }
 
 .advisor.idle {
@@ -66,15 +71,3 @@
 .advisor .icon {
     font-size: 100px;
 }
-
-/*.hidden-screen{
-  left: 150%;
-}
-
-.screen{
-  position: relative;
-}
-
-#screens{
-  overflow: hidden;
-}*/

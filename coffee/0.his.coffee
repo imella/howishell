@@ -2,7 +2,7 @@
 # resources: # energy must be calculated based on what's installed on the moon
 #   money: 10
 #   h3: 0
-
+ 
 
 # cell defintion
   # thing
@@ -10,7 +10,7 @@
     # thing data
     # actions
   # resourceDensity (must sum 1)
-    # rock
+    # rock 
     # silica 0.45
     # he3 0.01
     # alumina 0.15
@@ -24,7 +24,7 @@
     # Array of cell indices
 
 initializeMoon = (width, height) ->
-  moon =
+  moon = 
     width: width
     height: height
     cells: []
@@ -55,9 +55,9 @@ build = (id, x, y) ->
   # t =  @HIS.things[id]
   # Check resources
   # Discount resources
-  # addEvent (turn, function)
+  # addEvent (turn, function) 
   #   turn = current + t.build.turns
-  #   setInPosition(x, y, t)
+  #   setInPosition(x, y, t) 
   # setInPosition (x, y, @HIS.things['cs'])
 
 
@@ -68,7 +68,7 @@ updateState = ->
 
 cleanDialogs = ->
 
-createDialogs = ->
+createDialogs = ->  
 
 # beforeBudgetListener Functions
 
@@ -104,7 +104,7 @@ clearBudget = ->
     aluminum: 0
     silicon: 0
     bricks: 0
-  moon: initializeMoon(9, 8)
+  moon: initializeMoon(12, 8)
   currentDialog:
     guided: ''
     nonGuided: '' # on click
@@ -147,14 +147,14 @@ clearBudget = ->
       specialty: 'Secretary of Military and Strategic Defense' # Expansion and Survival
 
 
-@HIS.dataDef = (id, name, image_url, keywords) ->
+@HIS.dataDef = (id, name, image_url, keywords) -> 
   {
     id: id
     name: name
     image_url: image_url
     keywords: keywords
   }
-
+  
 
 @HIS.buildDef = (costs, factoryIds, robots, turns, bricks, aluminum, silicon, data) ->
   data.keywords.push('build')
@@ -168,23 +168,21 @@ clearBudget = ->
     silicon: silicon
   data
 
-@HIS.deliveryDef = (costs, turns, data) ->
+@HIS.deliveryDef = (costs, data) ->
   data.keywords.push('delivery')
   data['delivery'] =
     costs: costs
-    turns: turns
   data
 
-@HIS.maintenanceDef = (energy, robots, bricks, he3, data) ->
+@HIS.maintenanceDef = (energy, robots, he3, data) ->
   data.keywords.push('maintenance')
   data['maintenance'] =
     energy: energy
     robots: robots
-    bricks: bricks
     he3: he3
   data
 
-@HIS.generatorDef = (energy, he3, bricks, aluminum, silicon, data) ->
+@HIS.generatorDef = (energy, he3, bricks, aluminum, silicon, storage, data) ->
   data.keywords.push('generator')
   data['generator'] =
     energy: energy
@@ -192,11 +190,12 @@ clearBudget = ->
     bricks: bricks
     aluminum: aluminum
     silicon: silicon
+    storage: storage
   data
 
 @HIS.findCellsByThingId = (id) ->
-  @.state.moon.cells.filter (c) ->
-    c.thing.id == id unless c.thing == undefined
+  @.state.moon.cells.filter (c) -> 
+    c.thing.id == id unless c.thing == undefined 
 
 @HIS.findCellsByKeyword = (keyword) ->
   @.state.moon.cells.filter (c) ->
@@ -230,22 +229,34 @@ clearBudget = ->
     .filter((c) -> c.thing.maintenance != undefined and c.thing.maintenance[keyword] != undefined )
     .map((c) -> c.thing.maintenance[keyword])
     .reduce(((m, b) -> m + b), 0)
+
+  ei = inputByResource('energy', (r, c) -> r)
+  eo = outputByResource('energy')
+
+  si = inputByResource('storage', (r, c) -> r)
+  so = outputByResource('storage')
+
   {
-    energy:
-      input: inputByResource('energy', (r, c) -> r)
-      output: outputByResource('energy')
-    he3:
+    energy: 
+      input: ei
+      output: eo
+      gross: ei - eo
+    he3: 
       input: inputByResource('he3', (r, c) -> r * c.resourceDensity.he3)
       output: outputByResource('he3')
       total: @state.resources.he3
-    bricks:
+    bricks: 
       input: inputByResource('bricks', (r, c) -> r * c.resourceDensity.rock)
       output: outputByResource('bricks')
       total: @state.resources.bricks
-    aluminum:
+    aluminum: 
       input: inputByResource('aluminum', (r, c) -> r * c.resourceDensity.alumina)
       total: @state.resources.aluminum
-    silicon:
+    silicon: 
       input: inputByResource('silicon', (r, c) -> r * c.resourceDensity.silica)
       total: @state.resources.silicon
+    storage:
+      input: si
+      output: so
+      gross: si - so
   }

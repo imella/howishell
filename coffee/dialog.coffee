@@ -6,7 +6,7 @@ createRexDialog = ->
 	if @HIS.findCellsByThingId('bulldozer').size is 0 and @HIS.state.turn > 10
 		message.push "I think that a #{@HIS.data.things.bulldozer.name} could greately improve our He3 income."
 	
-	if @HIS.income().energy.gross <= 0
+	if @HIS.resourceStatus().energy.gross <= 0
 		message.push "Energy situation on the moon is critical, We need energy now, send batteries."
 		
 	message
@@ -53,43 +53,55 @@ createJakeDialog = ->
 	else if @HIS.state.turn is 15
 		@HIS.state.firstJakeQuestCompleted = false
 		message.push "I'm very exited to tell you that we got that contract."
-		message.push "If we build the #{@HIS.data.things.laser.name}, the earth goverment is going to pay us 2000 credits."
+		message.push "If we build the #{@HIS.data.things.laser.name}, the earth goverment is going to pay us 1000 credits."
 		message.push "The ugly part is that we only have 5 turns to acomplish this."
 		message.push "With your help we can make it!."
 	if @HIS.state.turn < 20
 		message.push "Hurry up!, we only have till turn 20 to build the #{@HIS.data.things.laser.name}."
 	if @HIS.state.turn is 20
 		if @HIS.state.firstJakeQuestCompleted
-			@HIS.state.resources.money += 2000
+			@HIS.state.resources.money += 1000
 			message.push "Excelent job! The earth government has just wired us the credits."
 		else
 			message.push "You failed, the quest was not completed."
-	if @HIS.state.turn is 23
-		if @HIS.state.firstJakeQuestCompleted
+	
+	if @HIS.state.firstJakeQuestCompleted
+		if @HIS.state.turn is 23
 			message.push "The first quest was great, let's keep doing a amazing job."
 			message.push "Get ready for the next quest!"
-		else
-		  message.push "The first quest was not acomplished, but here you have another opportunity."
-			message.push "Get ready for the next quest!"
-		message.push "If we build the #{@HIS.data.things.shield.name}, the earth goverment is going to pay us 5000 credits."
-		message.push "The ugly part is that we only have 7 turns to acomplish this."
-
+			@HIS.state.secondJakeQuestCompleted = false
+		else if @HIS.state.turn < 26
+			message.push "I'm very exited to tell you that we got another contract."
+		else if @HIS.state.turn < 29
+			message.push "The earth government is very impressed with the results of the last contract."
+			message.push "This time if we build the #{@HIS.data.things.shield.name}, they are going to permanently finance our operations."
+			message.push "The sake of humanity cannot be left to the dices."
+			message.push "Beware that this time we only have 7 turns."
+		else if @HIS.state.turn < 36
+			message.push "Hurry up!, we only have #{36 - @HIS.state.turn} turns left to build the #{@HIS.data.things.laser.name}."
+		else 
+			message.push "You failed to build the #{@HIS.data.things.laser.name}. I have nothing else to discuss with you."
 	message
 
+# El Dr. Wallo esta encargado de realizar investigación en la luna.
+# Woff
 createWalloDialogs = ->
-	message = []
-	if @HIS.findCellsByThingId('s_silo').size is 0
-		message.push "I think that a #{@HIS.data.things.s_silo.name} is nedeed."
-	
-	message
+	["woff."]
 
+
+# El Colonel Telescope esta encargado de instalar sitios 
+# para poder colocar telescopios y mantenerlos apuntando a distintas direcciones.
+# Entrega misiones, pero estas tienen un tiempo mas libre para llevarlas a cabo.
 createTelescopeDialogs = ->
 	message = []
-	if @HIS.findCellsByThingId('comms').size is 0
+	currentAntenas = @HIS.findCellsByThingId('comms').size
+	expectedAntenas = @HIS.state.turn * 0.15
+	if currentAntenas < expectedAntenas
+		message.push "We could be receiving signals from outer space right now."
+		message.push "Acording to my schedules, we need #{expectedAntenas}, but we currently only have #{currentAntenas}."
 		message.push "I think that a #{@HIS.data.things.comms.name} is nedeed."
-	
-	if @HIS.state.turn is 5
-		message.push "I think that a #{@HIS.data.things.comms.name} is nedeed."
+	else
+		message.push "Our outer space exploration is going very good. Nice!"
 	message
 
 getDialogs = ->
