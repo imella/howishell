@@ -170,15 +170,15 @@
     )
   )
 
-@HIS.data.things.monkeyDome = @HIS.buildDef(500, ['waterExtractor'], 0, 0, 0, 0, 0,
+@HIS.data.things.monkeys = @HIS.buildDef(500, ['waterExtractor'], 0, 0, 0, 0, 0,
     @HIS.maintenanceDef(100, 0, 0,
-      @HIS.dataDef('monkeyDome', 'Monkey Bio-Dome', 'monkeyDome.png', ['silo', 'energy'])
+      @HIS.dataDef('monkeys', 'Monkey Bio-Dome', 'monkeys.png', ['silo', 'energy'])
     )
   )
 
-@HIS.data.things.humanDome = @HIS.buildDef(800, ['waterExtractor'], 0, 0, 0, 0, 0,
+@HIS.data.things.humans = @HIS.buildDef(800, ['waterExtractor'], 0, 0, 0, 0, 0,
     @HIS.maintenanceDef(500, 0, 0,
-      @HIS.dataDef('humanDome', 'Human Bio-Dome', 'humanDome.png', ['silo', 'energy'])
+      @HIS.dataDef('humans', 'Human Bio-Dome', 'humans.png', ['silo', 'energy'])
     )
   )
 
