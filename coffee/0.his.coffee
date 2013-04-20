@@ -3,6 +3,26 @@
 #   money: 10
 #   h3: 0
  
+
+# cell defintion
+  # thing
+    # state
+    # thing data
+    # actions
+  # resourceDensity (must sum 1)
+    # rock 
+    # silica 0.45
+    # he3 0.01
+    # alumina 0.15
+
+#findById (id)
+  # returns
+    # Array of cell indices
+
+# findByKeyword (keyword)
+  # returns
+    # Array of cell indices
+
 initializeMoon = (width, height) ->
   moon = 
     width: width
@@ -11,8 +31,24 @@ initializeMoon = (width, height) ->
 
   [0..width - 1].map (i) ->
     [0..height - 1].map (j) ->
-      moon.cells.push(0)
+      moon.cells.push(defCell())
   moon
+
+
+defCell = ->
+  silica = Math.random() * 0.45
+  he3 = Math.random() * 0.01
+  alumina = Math.random() * 0.15
+  rock = 1 - silica - he3 - alumina
+  {
+    resourceDensity:
+      rock: rock
+      silica: silica
+      he3: he3
+      alumina: alumina
+  }
+
+
 
 build = (id, x, y) ->
   # Check if spot is available
@@ -84,86 +120,6 @@ clearBudget = ->
       name: 'Construction Site'
       image_url: 'construction-site.png'
       keywords: []
-    # 'scv':
-    #   id: 'scv'
-    #   name: 'SCV'
-    #   image_url: 'scv.png'
-    #   keywords: ['robot', 'delivery', 'build']
-    #   delivery: 
-    #     cost: 20
-    #     turns: 1
-    #   build:
-    #     cost: 2
-    #     factoryIds: [2]
-    #     robots: 2
-    #     turns: 1
-    #     bricks: 0
-    #     aluminum: 15
-    #     silicon: 30
-    'robot_factory':
-      id: 'robot_factory'
-      name: 'Robot Factory'
-      image_url: 'robot-factory.png'
-      keywords: ['factory', 'build', 'maintenance', 'actions']
-      build:
-        cost: 30
-        factoryIds: []
-        robots: 2
-        turns: 3
-        bricks: 100
-        aluminum: 150 
-        silicon: 50
-      maintenance:
-        energy: 5
-        robots: 0
-        bricks: 0
-        he3: 0
-      actions: [] # [{name: val, function}]
-    'drill':
-      id: 'drill'
-      name: 'Ultra Powerfull Black Scalable Cloud Drill.js'
-      image_url: 'drill.png'
-      keywords: ['extractor', 'build', 'maintenance', 'generator']
-      build:
-        cost: 10
-        factoryIds: []
-        robots: 1
-        turns: 2
-        bricks: 0
-        aluminum: 0 
-        silicon: 0
-      maintenance:
-        energy: 12
-        robots: 1
-        bricks: 0
-        he3: 0
-      generator:
-        energy: 0
-        he3: 0
-        bricks: 20
-        aluminum: 0
-        silicon: 0
-      'small_silo':
-        id: 'small_silo'
-        name: 'Small Silo x23'
-        image_url: 'x23.png'
-        keywords: ['container', 'build', 'maintenance']
-        build:
-          cost: 0
-          factoryIds: []
-          robots: 4
-          turns: 2
-          bricks: 100
-          aluminum: 0 
-          silicon: 0
-        maintenance:
-          energy: 1
-          robots: 0
-          bricks: 0
-          he3: 0
-        container:
-          storage: 200
-          contains: 'resources'
 
   advisors:
     'rex_charger':
@@ -215,3 +171,33 @@ clearBudget = ->
     costs: costs
     turns: turns
   data
+
+@HIS.findCellsByThingId = (id) ->
+  @HIS.moon.cells.filter (c) -> c.thing.id == id
+
+@HIS.findCellsByKeyword = (keyword) ->
+  @HIS.moon.cells.filter (c) ->
+    keyword in c.thing.keywords
+
+@HIS.build = (cellId, thingId) ->
+  cell = @.state.moon.cells[cellId]
+  cell['thing'] = @.data.things[thingId]
+  # cell.thing['state'] = cell.thing.initialState
+  cell
+# Income
+  # energy
+  # he3
+  # bricks
+  # aluminum
+  # silicon
+@HIS.income = ->
+  incomeByResource = (keyword) ->
+    @HIS.findCellsByKeyword(keyword).map((c) -> c.thing.generator[keyword]).reduce (a, b) -> a + b
+  
+  {
+    energy: incomeByResource('energy')
+    he3: incomeByResource('he3')
+    bricks: incomeByResource('bricks')
+    aluminum: incomeByResource('aluminum')
+    silicon: incomeByResource('silicon')
+  }
