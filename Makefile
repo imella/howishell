@@ -6,10 +6,10 @@ TEMPLATES=js/templates.js
 compile: $(APP) $(TEMPLATES)
 
 $(APP): coffee/*.coffee
-	coffee --compile --join $@ $<
+	coffee --compile --join $@ $^
 
 $(TEMPLATES): views/*.hb
-	handlebars --output $@ $<
+	handlebars --output $@ $^
 
 clean:
 	rm -f $(APP) $(TEMPLATES)
