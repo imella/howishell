@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each special_equipment}}
+    {{#each specials}}
     <tr>
       <td>
         <strong>{{name}}</strong>
@@ -21,7 +21,7 @@
     </tr>
     {{/each}}
 
-    {{#each budget_items}}
+    {{#each deliverables}}
     <tr>
       <td>
         <strong>{{name}}</strong>
