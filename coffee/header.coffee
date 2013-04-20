@@ -1,14 +1,16 @@
 $ ->
     HIS.state.turn = 0
-    $("#header").html(Handlebars.templates['header.hb'](HIS))
+    
     $("#advisors").html(Handlebars.templates['advisors.hb']( advisors : $.map(HIS.data.advisors, (value, key) -> value) ))
 
     $("#screen-meeting, #screen-budget, #screen-moon").hide()
     screen = 'meeting'
     $("#screen-meeting").show()
     setupDialog()
+    updateResources()
 
     $("#next-btn").click () =>
+        updateResources()
         $("#screen-meeting, #screen-budget, #screen-moon").hide()
         switch screen
             when 'meeting'
@@ -23,10 +25,11 @@ $ ->
                 setupDialog()
                 screen = 'meeting'
 
+updateResources = ->
 
-    
-    
-        
+    state = HIS.resourceStatus()
+    context = {status: HIS.resourceStatus(), money: HIS.state.resources.money}
+    $("#header").html(Handlebars.templates['header.hb'](context))
     
 
 
