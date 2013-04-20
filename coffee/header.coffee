@@ -30,30 +30,55 @@ $ ->
 
 
 setupDialog = ->
+
+    $("#advisors, #advisors .advisors").unbind();
+    $("#advisor .advisors").popover('destroy')
     
     conversation = getDialogs(0)
-    
-    unless conversation.guided
-        return
+        
+    startGuided = () =>
 
-    showGuided = (index) =>
-        console.log "show guided #{index}"
-        if index < conversation.guided.length
-            index++
-        else
-            finish()
-            return
+        getText = (index) =>
+            return conversation.guided[index].message
+        
 
-        dialog = conversation.guided[index]
-        console.log "dialog #{dialog}"
-        $("#dialog").html(Handlebars.templates['dialog.hb'](
-            advisor : HIS.data.advisors[dialog.advisor],
-            message : dialog.message
-            )).find(".next").click(()-> showGuided(index+1))
+        nextClick = () =>
 
-    finish = =>
-        $("#dialog").empty()
+        onClick = () =>
+            nextClick()
 
-    showGuided(0)
+        showGuided = (index) =>
+            dialog = conversation.guided[index]
+
+            $("#advisors .advisor").popover('destroy')
+
+            if not dialog 
+                console.log("finished guided")
+                nextClick = () =>
+                $("#advisors").unbind('click')
+                return
+
+            
+
+            nextClick = () =>
+                showGuided(index+1)
+
+            advisorIcon = $("#advisors .advisor[data-id='#{dialog.author}']")
+            
+            advisorIcon.popover
+                animation : false
+                title : ''
+                content : dialog.message
+                placement: 'bottom'
+                trigger : 'manual'
+
+            advisorIcon.popover('show')
+            
+
+        $("#advisors").click(onClick)
+        showGuided(0)
+
+
+    startGuided()
 
 
