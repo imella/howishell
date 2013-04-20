@@ -89,7 +89,7 @@
 
 @HIS.data.things.battery = @HIS.deliveryDef(20,
     @HIS.dataDef('battery', 'Battery', 'battery.png', ['energy'])
-  )
+)
 
 #####################
 # FACTORIES         #
@@ -133,13 +133,13 @@
 #####################
 @HIS.data.things.laser = @HIS.buildDef(500, ['advancedPrinter'], 10, 5, 0, 0, 0,
     @HIS.maintenanceDef(1000, 15, 0,
-      @HIS.buildDef('laser', 'Tactical High Energy Laser', 'laser.png', ['defense', 'energy', 'robots'])
+      @HIS.dataDef('laser', 'Tactical High Energy Laser', 'laser.png', ['defense', 'energy', 'robots'])
     )
   )
 
 @HIS.data.things.shield = @HIS.buildDef(100, ['laser'], 10, 15, 0, 0, 0,
     @HIS.maintenanceDef(1000, 20, 0,
-      @HIS.buildDef('shield', 'Meteor Defense Shield', 'shield.png', ['defense', 'energy', 'robots'])
+      @HIS.dataDef('shield', 'Meteor Defense Shield', 'shield.png', ['defense', 'energy', 'robots'])
     )
   )
 
