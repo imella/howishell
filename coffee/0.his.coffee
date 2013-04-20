@@ -42,10 +42,10 @@ defCell = ->
   rock = 1 - silica - he3 - alumina
   {
     resourceDensity:
-      rock: rock
-      silica: silica
-      he3: he3
-      alumina: alumina
+      rock: Number((rock).toFixed(1))
+      silica: Number((silica).toFixed(1))
+      he3: Number((he3).toFixed(1))
+      alumina: Number((alumina).toFixed(1))
   }
 
 # beforeMeetingListener Functions

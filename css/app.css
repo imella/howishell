@@ -2,17 +2,66 @@
   text-decoration: none;
 }
 .area {
+  cursor: pointer;
   display: table-cell;
   margin: 0px;
   border: solid black 1px;
-  height: 78px;
-  width: 78px;
+  height: 70px;
+  width: 70px;
+  opacity: 0.5;
+}
+.area-corner {
+  cursor: pointer;
+  display: table-cell;
+  margin: 0px;
+  border: solid transparent 1px;
+  height: 24px;
+  width: 24px;
+  opacity: 0.5;
+}
+.area-column {
+  cursor: pointer;
+  display: table-cell;
+  margin: 0px;
+  border: solid transparent 1px;
+  height: 24px;
+  width: 70px;
+  background: rgb(0,0,0, 0.5);
+  text-align: center;
+  font-weight: bold;
+}
+.row-number{
+  vertical-align:middle;
+}
+.area-row {
+  cursor: pointer;
+  display: table-cell;
+  margin: 0px;
+  border: solid transparent 1px;
+  height: 70px;
+  width: 24px;
+  font-weight: bold;
+  vertical-align:middle;
+}
+
+#moon-map{
+  position: relative;
+}
+
+#moon-areas{
+  top: 0;
+  left: 20px;
+  position: absolute;
 }
 
 .advisor {
     display: inline-block;
     width: 130px;
-    margin: 20px;
+	margin: 20px;
+}
+
+#advisors {
+  padding: 100px 150px;
 }
 
 .advisor.idle {
@@ -21,8 +70,4 @@
 
 .advisor .icon {
     font-size: 100px;
-}
-
-#advisors {
-  padding: 100px 150px;
 }
