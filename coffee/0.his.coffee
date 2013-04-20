@@ -168,23 +168,21 @@ clearBudget = ->
     silicon: silicon
   data
 
-@HIS.deliveryDef = (costs, turns, data) ->
+@HIS.deliveryDef = (costs, data) ->
   data.keywords.push('delivery')
   data['delivery'] =
     costs: costs
-    turns: turns
   data
 
-@HIS.maintenanceDef = (energy, robots, bricks, he3, data) ->
+@HIS.maintenanceDef = (energy, robots, he3, data) ->
   data.keywords.push('maintenance')
   data['maintenance'] =
     energy: energy
     robots: robots
-    bricks: bricks
     he3: he3
   data
 
-@HIS.generatorDef = (energy, he3, bricks, aluminum, silicon, data) ->
+@HIS.generatorDef = (energy, he3, bricks, aluminum, silicon, storage, data) ->
   data.keywords.push('generator')
   data['generator'] =
     energy: energy
@@ -192,6 +190,7 @@ clearBudget = ->
     bricks: bricks
     aluminum: aluminum
     silicon: silicon
+    storage: storage
   data
 
 @HIS.findCellsByThingId = (id) ->
@@ -248,4 +247,7 @@ clearBudget = ->
     silicon: 
       input: inputByResource('silicon', (r, c) -> r * c.resourceDensity.silica)
       total: @state.resources.silicon
+    storage:
+      input: inputByResource('storage', (r, c) -> r
+      output: outputByResource('storage')
   }
