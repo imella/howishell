@@ -1,10 +1,25 @@
-@HIS.data.things.scv = @HIS.generatorDef(10,0,3,4,6,
-  @HIS.deliveryDef(20, 1,
-    @HIS.buildDef(2, [2], 2, 1, 0, 15, 30, 
-      @HIS.dataDef('scv', 'SCV', 'scv.url', ['robot', 'energy']))
+@HIS.data.things.scv = @HIS.deliveryDef(20, 1,
+    @HIS.buildDef(2, ['robotFactory'], 2, 1, 0, 15, 30, 
+      @HIS.dataDef('scv', 'SCV', 'scv.png', ['robot'])
+    )
   )
-)
 
+@HIS.data.things.robotFactory = @HIS.buildDef(30, [], 2, 3, 100, 150, 50,
+    @HIS.maintenanceDef(5, 0, 0, 0,
+      @HIS.dataDef('robotFactory', 'Robot Factory', 'robotFactory.png', ['factory', 'energy'])
+    )
+  )
+
+@HIS.data.things.drill = @HIS.buildDef(10, [], 4, 2, 0, 0, 0,
+    @HIS.maintenanceDef(12, 1, 0, 0,
+      @HIS.generatorDef(0, 0, 20, 0, 0,
+        @HIS.dataDef('drill', 'Super Drill', 'drill.png', ['drill', 'bricks', 'energy'])
+      )
+    )
+  )
+
+@HIS.data.constants =
+  money: "MUSD"
 
 # @HIS.dataDefinitionHelperBuilding('scv', 2, [2], 2, 1, 0, 15, 30)
 

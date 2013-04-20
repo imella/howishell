@@ -100,7 +100,10 @@ clearBudget = ->
   events: [] # [{turn: val, function}]
   resources:
     money: 10
-    h3: 0
+    he3: 0
+    aluminum: 0
+    silicon: 0
+    bricks: 0
   moon: initializeMoon(12, 8)
   currentDialog:
     guided: ''
@@ -125,7 +128,7 @@ clearBudget = ->
     'rex_charger':
       id: 'rex_charger'
       name: 'Rex Charger'
-      specialty: 'Sustainale Energy Specialist' # Energy
+      specialty: 'Sustainable Energy Specialist' # Energy
     'dr_yrion':
       id: 'dr_yrion'
       name: 'Dr. Yrion'
@@ -133,7 +136,7 @@ clearBudget = ->
     'col_telescope':
       id: 'col_telescope'
       name: 'Colonel Telescope'
-      specialty: 'Senior Optical Technician @SETI' # Radiotelescope
+      specialty: 'Senior Optical Technician at SETI' # Radiotelescope
     'dr_wallo':
       id: 'dr_wallo'
       name: 'Dr. Wallo'
@@ -172,6 +175,15 @@ clearBudget = ->
     turns: turns
   data
 
+@HIS.maintenanceDef = (energy, robots, bricks, he3, data) ->
+  data.keywords.push('maintenance')
+  data['maintenance'] =
+    energy: energy
+    robots: robots
+    bricks: bricks
+    he3: he3
+  data
+
 @HIS.generatorDef = (energy, he3, bricks, aluminum, silicon, data) ->
   data.keywords.push('generator')
   data['generator'] =
@@ -202,13 +214,38 @@ clearBudget = ->
   # aluminum
   # silicon
 
-@HIS.income = ->
-  incomeByResource = (keyword) ->
-    @HIS.findCellsByKeyword(keyword).map((c) -> c.thing.generator[keyword]).reduce(((a, b) -> a + b), 0)
+@HIS.inputByResource = (keyword) ->
+  @findCellsByKeyword(keyword).map((c) -> c.thing.generator[keyword]).reduce(((a, b) -> a + b), 0)
+@HIS.outputByResource = (keyword) ->
+  @findCellsByKeyword(keyword).map((c) -> c.thing.maintenance[keyword]).reduce(((a, b) -> a + b), 0)
+
+@HIS.resourceStatus = ->
+  inputByResource = (keyword, resourceCalculator) ->
+    @HIS.findCellsByKeyword(keyword)
+    .filter((c) -> c.thing.generator != undefined and c.thing.generator[keyword] != undefined )
+    .map((c) -> resourceCalculator(c.thing.generator[keyword], c))
+    .reduce(((m, b) -> m + b), 0)
+  outputByResource = (keyword) ->
+    @HIS.findCellsByKeyword(keyword)
+    .filter((c) -> c.thing.maintenance != undefined and c.thing.maintenance[keyword] != undefined )
+    .map((c) -> c.thing.maintenance[keyword])
+    .reduce(((m, b) -> m + b), 0)
   {
-    energy: incomeByResource('energy')
-    he3: incomeByResource('he3')
-    bricks: incomeByResource('bricks')
-    aluminum: incomeByResource('aluminum')
-    silicon: incomeByResource('silicon')
+    energy: 
+      input: inputByResource('energy', (r, c) -> r)
+      output: outputByResource('energy')
+    he3: 
+      input: inputByResource('he3', (r, c) -> r * c.resourceDensity.he3)
+      output: outputByResource('he3')
+      total: @state.resources.he3
+    bricks: 
+      input: inputByResource('bricks', (r, c) -> r * c.resourceDensity.rock)
+      output: outputByResource('bricks')
+      total: @state.resources.bricks
+    aluminum: 
+      input: inputByResource('aluminum', (r, c) -> r * c.resourceDensity.alumina)
+      total: @state.resources.aluminum
+    silicon: 
+      input: inputByResource('silicon', (r, c) -> r * c.resourceDensity.silica)
+      total: @state.resources.silicon
   }
