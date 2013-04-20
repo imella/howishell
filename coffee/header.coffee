@@ -21,6 +21,7 @@ $ ->
                 $("#screen-meeting").show()
                 setupDialog()
                 screen = 'meeting'
+                HIS.state.turn++
 
     
     
@@ -31,37 +32,44 @@ $ ->
 
 setupDialog = ->
 
-    $("#advisors, #advisors .advisors").unbind();
+    $("#advisors, #advisors .advisor").unbind('click');
     $("#advisor .advisors").popover('destroy')
-    
-    conversation = getDialogs(0)
-        
-    startGuided = () =>
 
-        getText = (index) =>
-            return conversation.guided[index].message
-        
+    showingDialog = false
+    conversation = getDialogs()
+    console.log conversation
+
+    $("#advisors .advisor").each (idx, avatar)=>
+        console.log avatar
+        $(avatar).click () =>
+            console.log "clicked on #{$(avatar).data('id')} when showingDialog = #{showingDialog}"
+            if not showingDialog
+                startUnguided($(avatar).data('id'))
+
+
+
+    startGuided = () =>
+        showingDialog = true
 
         nextClick = () =>
 
         onClick = () =>
             nextClick()
 
-        showGuided = (index) =>
+        showStep = (index, author) =>
             dialog = conversation.guided[index]
 
             $("#advisors .advisor").popover('destroy')
 
             if not dialog 
-                console.log("finished guided")
-                nextClick = () =>
                 $("#advisors").unbind('click')
+                showingDialog = false
                 return
 
             
 
             nextClick = () =>
-                showGuided(index+1)
+                showStep(index+1)
 
             advisorIcon = $("#advisors .advisor[data-id='#{dialog.author}']")
             
@@ -76,8 +84,46 @@ setupDialog = ->
             
 
         $("#advisors").click(onClick)
-        showGuided(0)
+        showStep(0)
+ 
+    startUnguided = (author) =>
 
+        console.log "asked for help from #{author}"
+
+        nextClick = () =>
+
+        onClick = () =>
+            nextClick()
+
+        getText = (index) =>
+            dialog[index]
+
+        dialog = conversation.nonGuided[author]
+
+        advisorIcon = $("#advisors .advisor[data-id='#{author}']")
+            
+        advisorIcon.popover
+            animation : false
+            title : ''
+            content : getText
+            placement: 'bottom'
+            trigger : 'manual'        
+
+        showStep = (index) =>
+            if not dialog 
+                $("#advisors .advisor").popover('destroy')
+                $("#advisors").unbind('click')
+                showingDialog = false
+                return
+
+            nextClick = () =>
+                showStep(index+1)
+            
+            advisorIcon.popover('show')            
+
+        $("#advisors").click(onClick)
+
+        showStep(0)
 
     startGuided()
 
