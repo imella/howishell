@@ -43,13 +43,28 @@ createYrionDialog = ->
 #  Cada vez que logra un objetivo, recibirá mucho dinero.
 createJakeDialog = ->
 	message = []
-	if @HIS.state.turn < 3
+	if @HIS.state.turn < 5
 		message.push "I'm currently on the final state of contract negociations, give me some time and I will close the deal."
-	
-	if @HIS.state.turn is 4
-		message.push "I got the contract, shall we ."
-		message.push "I'm very exited, but I only have 5 turns to build the base, with your help we can make it!."
-			
+	else if @HIS.state.turn < 8
+		message.push "We are almost ready with the contract. We will need a big energy input. Consider building a #{@HIS.data.things.fusion.name}."
+	else if @HIS.state.turn < 12 
+		message.push "We are going to build a laser."
+		message.push "We will be needing many robots for its maintenance and a lot of cash."
+	else if @HIS.state.turn is 15
+		@HIS.state.firstJakeQuestCompleted = false
+		message.push "I'm very exited to tell you that we got that contract."
+		message.push "If we build the #{@HIS.data.things.laser.name}, the earth goverment is going to pay us 2000 credits."
+		message.push "The ugly part is that we only have 5 turns to acomplish this."
+		message.push "With your help we can make it!."
+	if @HIS.state.turn < 20
+		message.push "Hurry up!, we only have till turn 20 to build the #{@HIS.data.things.laser.name}."
+	if @HIS.state.turn is 20
+		if @HIS.state.firstJakeQuestCompleted
+			@HIS.state.resources.money += 2000
+			message.push "Excelent job! The earth government has just wired us the credits."
+		else
+			message.push "You failed, the quest was not completed."
+
 	message
 
 createWalloDialogs = ->
