@@ -41,6 +41,6 @@
     {{/each}}
   <tr>
     <td colspan="4">Total</td>
-    <td>{{total}}</td>
+    <td class="total">{{total}}</td>
   </tbody>
 </table>

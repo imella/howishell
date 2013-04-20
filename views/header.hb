@@ -1,5 +1,11 @@
 <div class="row">
-    {{#with status}}
+    <div class="span4 pull-left">Turn: {{state.turn}}</div>
+    <div class="span2 pull-right">
+        <a href="#" class="btn next-btn"> Next <i class="icon icon-arrow-right"></i></a>
+    </div>
+</div>
+<div id="resource-status" class="row" >
+    {{#with resources}}
 
         <div class="span2" title="Energy">
             <i class="resource icon icon-bolt"></i> {{energy.output}}/{{energy.input}} mW
@@ -35,7 +41,7 @@
     {{/with}}
 
     <div class="span2" tilte="Budget">
-        <strong class="resource"><i class="icon icon-globe"></i>$</strong> {{money}}M
+        <strong class="resource"><i class="icon icon-globe"></i>$</strong> {{state.resources.money}}M
     </div>
 
 </div>
