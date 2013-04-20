@@ -6,26 +6,26 @@ $ ->
     screen = 'meeting'
     setupDialog()
 
-    $("#next-btn").click () ->
-        $("#screen-meeting, #screen-budget, #screen-moon").hide()
-        switch screen
-            when 'meeting'
-                $("#screen-budget").show()
-                screen = 'budget'
-            when 'budget'
-                $("#screen-moon").show()
-                screen = 'moon'
-            when 'moon'
-                $("#screen-meeting").show()
-                setupDialog()
-                screen = 'meeting'
+    # $("#next-btn").click () ->
+    #     $("#screen-meeting, #screen-budget, #screen-moon").hide()
+    #     switch screen
+    #         when 'meeting'
+    #             $("#screen-budget").show()
+    #             screen = 'budget'
+    #         when 'budget'
+    #             $("#screen-moon").show()
+    #             screen = 'moon'
+    #         when 'moon'
+    #             $("#screen-meeting").show()
+    #             setupDialog()
+    #             screen = 'meeting'
 
 
 
 setupDialog = ->
-    
+
     conversation = getDialogs(0)
-    
+
     unless conversation.guided
         return
 

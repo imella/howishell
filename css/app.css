@@ -2,11 +2,23 @@
   text-decoration: none;
 }
 .area {
+  cursor: pointer;
   display: table-cell;
   margin: 0px;
   border: solid black 1px;
   height: 78px;
   width: 78px;
+  opacity: 0.5;
+}
+
+#moon-map{
+  position: relative;
+}
+
+#moon-areas{
+  top: 0;
+  left: 20px;
+  position: absolute;
 }
 
 .advisor {
@@ -17,4 +29,16 @@
 
 .advisor .icon {
     font-size: 100px;
+}
+
+.hidden-screen{
+  left: 150%;
+}
+
+.screen{
+  position: relative;
+}
+
+#screens{
+  overflow: hidden;
 }
