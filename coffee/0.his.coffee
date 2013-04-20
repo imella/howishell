@@ -30,9 +30,9 @@ build = (id, x, y) ->
 updateState = ->
   console.log "Updating Game State"
 
-createDialogs = ->
-  console.log "Creating meeting dialogs"
+cleanDialogs = ->
 
+createDialogs = ->  
 
 # beforeBudgetListener Functions
 
@@ -45,8 +45,7 @@ clearBudget = ->
   console.log "Clearing budget array"
 
 @HIS =
-
-  beforeMeetingListener: [updateState, createDialogs] # Array of functions
+  beforeMeetingListener: [updateState, cleanDialogs, createDialogs] # Array of functions
   beforeMeeting: ->
     @beforeMeetingListener.map (l) -> l()
 
@@ -58,7 +57,7 @@ clearBudget = ->
   beforeMoonListener: [addBuget, clearBudget]
   beforeMoon: ->
     @beforeMoonListener.map (l) -> l()
-  
+
 
 @HIS.state =
   turn: -1
@@ -85,22 +84,22 @@ clearBudget = ->
       name: 'Construction Site'
       image_url: 'construction-site.png'
       keywords: []
-    'scv':
-      id: 'scv'
-      name: 'SCV'
-      image_url: 'scv.png'
-      keywords: ['robot', 'delivery', 'build']
-      delivery: 
-        cost: 20
-        turns: 1
-      build:
-        cost: 2
-        factoryIds: [2]
-        robots: 2
-        turns: 1
-        bricks: 0
-        aluminum: 15
-        silicon: 30
+    # 'scv':
+    #   id: 'scv'
+    #   name: 'SCV'
+    #   image_url: 'scv.png'
+    #   keywords: ['robot', 'delivery', 'build']
+    #   delivery: 
+    #     cost: 20
+    #     turns: 1
+    #   build:
+    #     cost: 2
+    #     factoryIds: [2]
+    #     robots: 2
+    #     turns: 1
+    #     bricks: 0
+    #     aluminum: 15
+    #     silicon: 30
     'robot_factory':
       id: 'robot_factory'
       name: 'Robot Factory'
@@ -187,3 +186,32 @@ clearBudget = ->
       id: 'jake'
       name: 'Jake Rockwell'
       specialty: 'Secretary of Military and Strategic Defense' # Expansion and Survival
+
+
+@HIS.dataDef = (id, name, image_url, keywords) -> 
+  {
+    id: id
+    name: name
+    image_url: image_url
+    keywords: keywords
+  }
+  
+
+@HIS.buildDef = (costs, factoryIds, robots, turns, bricks, aluminum, silicon, data) ->
+  data.keywords.push('build')
+  data['build'] =
+    costs: costs
+    factoryIds: factoryIds
+    robots: robots
+    turns: turns
+    bricks: bricks
+    aluminum: aluminum
+    silicon: silicon
+  data
+
+@HIS.deliveryDef = (costs, turns, data) ->
+  data.keywords.push('delivery')
+  data['delivery'] =
+    costs: costs
+    turns: turns
+  data
