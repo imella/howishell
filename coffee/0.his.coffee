@@ -248,6 +248,6 @@ clearBudget = ->
       input: inputByResource('silicon', (r, c) -> r * c.resourceDensity.silica)
       total: @state.resources.silicon
     storage:
-      input: inputByResource('storage', (r, c) -> r
+      input: inputByResource('storage', (r, c) -> r)
       output: outputByResource('storage')
   }
