@@ -6,7 +6,7 @@ createRexDialog = ->
 	if @HIS.findCellsByThingId('bulldozer').size is 0 and @HIS.state.turn > 10
 		message.push "I think that a #{@HIS.data.things.bulldozer.name} could greately improve our He3 income."
 	
-	if @HIS.income().energy.gross <= 0
+	if @HIS.resourceStatus().energy.gross <= 0
 		message.push "Energy situation on the moon is critical, We need energy now, send batteries."
 		
 	message
