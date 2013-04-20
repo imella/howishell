@@ -127,6 +127,61 @@
     )
   )
 
+
+#####################
+# Defense           #
+#####################
+@HIS.data.things.laser = @HIS.buildDef(500, ['advancedPrinter'], 10, 5, 0, 0, 0,
+    @HIS.maintenanceDef(1000, 15, 0,
+      @HIS.buildDef('laser', 'Tactical High Energy Laser', 'laser.png', ['defense', 'energy', 'robots'])
+    )
+  )
+
+@HIS.data.things.shield = @HIS.buildDef(100, ['laser'], 10, 15, 0, 0, 0,
+    @HIS.maintenanceDef(1000, 20, 0,
+      @HIS.buildDef('shield', 'Meteor Defense Shield', 'shield.png', ['defense', 'energy', 'robots'])
+    )
+  )
+
+#####################
+# SILOS             #
+#####################
+@HIS.data.things.smallSilo = @HIS.buildDef(0, [], 0, 0, 100, 0, 0,
+    @HIS.maintenanceDef(1, 10, 0,
+      @HIS.generatorDef(0, 0, 0, 0, 0, 200,
+        @HIS.dataDef('smallSilo', 'Small Silo', 'smallSilo.png', ['silo', 'energy', 'robots', 'storage'])
+      )
+    )
+  )
+
+@HIS.data.things.mediumSilo = @HIS.buildDef(0, [], 0, 0, 200, 0, 0,
+    @HIS.maintenanceDef(1, 20, 0,
+      @HIS.generatorDef(0, 0, 0, 0, 0, 500,
+        @HIS.dataDef('mediumSilo', 'Medium Silo', 'mediumSilo.png', ['silo', 'energy', 'robots', 'storage'])
+      )
+    )
+  )
+
+@HIS.data.things.bigSilo = @HIS.buildDef(0, [], 0, 0, 300, 0, 0,
+    @HIS.maintenanceDef(1, 30, 0,
+      @HIS.generatorDef(0, 0, 0, 0, 0, 800,
+        @HIS.dataDef('bigSilo', 'Big Silo', 'bigSilo.png', ['silo', 'energy', 'robots', 'storage'])
+      )
+    )
+  )
+
+@HIS.data.things.monkeyDome = @HIS.buildDef(500, ['waterExtractor'], 0, 0, 0, 0, 0,
+    @HIS.maintenanceDef(100, 0, 0,
+      @HIS.dataDef('monkeyDome', 'Monkey Bio-Dome', 'monkeyDome.png', ['silo', 'energy'])
+    )
+  )
+
+@HIS.data.things.humanDome = @HIS.buildDef(800, ['waterExtractor'], 0, 0, 0, 0, 0,
+    @HIS.maintenanceDef(500, 0, 0,
+      @HIS.dataDef('humanDome', 'Human Bio-Dome', 'humanDome.png', ['silo', 'energy'])
+    )
+  )
+
 @HIS.data.constants =
   money: "MUSD"
 
