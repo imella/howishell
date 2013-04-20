@@ -1,6 +1,6 @@
 $ ->
     $("#header").html(Handlebars.templates['header.hb'](HIS))
-
+    $("#advisors").html(Handlebars.templates['advisors.hb']( advisors : $.map(HIS.data.advisors, (value, key) -> value) ))
 
     screen = 'meeting'
 
@@ -16,6 +16,7 @@ $ ->
             when 'moon'
                 $("#screen-meeting").show()
                 screen = 'meeting'
+
 
 
         
