@@ -24,8 +24,44 @@ build = (id, x, y) ->
   #   setInPosition(x, y, t) 
   # setInPosition (x, y, @HIS.things['cs'])
 
+
+# beforeMeetingListener Functions
+# Turn++
+updateState = ->
+  console.log "Updating Game State"
+
+createDialogs = ->
+  console.log "Creating meeting dialogs"
+
+
+# beforeBudgetListener Functions
+
+
+# beforeMoonListener Functinos
+addBuget = ->
+  console.log "Adding budget to the moon"
+
+clearBudget = ->
+  console.log "Clearing budget array"
+
 @HIS =
-  turn: 0
+
+  beforeMeetingListener: [updateState, createDialogs] # Array of functions
+  beforeMeeting: ->
+    @beforeMeetingListener.map (l) -> l()
+
+  beforeBudgetListener: []
+  beforeBudget: ->
+    @beforeBudgetListener.map (l) -> l()
+    # after dialogs triggers
+
+  beforeMoonListener: [addBuget, clearBudget]
+  beforeMoon: ->
+    @beforeMoonListener.map (l) -> l()
+  
+
+@HIS.state =
+  turn: -1
   events: [] # [{turn: val, function}]
   resources:
     money: 10
@@ -35,11 +71,14 @@ build = (id, x, y) ->
     guided: ''
     nonGuided: '' # on click
 
-  thingsToSend:
-    regular: [] # [{id: val, quantity: val}]
+  # Will be deleted after budget
+  budget:
+    regular: {} # [{id: val, quantity: val}]
     special: [] # [{name: val, value: val}]
   # TODO: Make a helper Function (HIPSTER CULIAO)
   # Avoid undefined keys (DANIEL CULIAO)
+
+@HIS.data =
   things:
     'cs':
       id: 'cs'
