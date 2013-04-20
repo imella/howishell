@@ -19,9 +19,10 @@ $ ->
                 screen = 'moon'
             when 'moon'
                 $("#screen-meeting").show()
+                HIS.state.turn++
                 setupDialog()
                 screen = 'meeting'
-                HIS.state.turn++
+
 
     
     
@@ -32,24 +33,22 @@ $ ->
 
 setupDialog = ->
 
-    $("#advisors, #advisors .advisor").unbind('click');
-    $("#advisor .advisors").popover('destroy')
+    $("#advisors, #advisors .advisor").unbind('click')
+    $("#advisor .advisor").removeClass('idle').popover('destroy')
+    $("#advisor").off('click')
 
-    showingDialog = false
     conversation = getDialogs()
-    console.log conversation
+    console.log conversation.nonGuided
 
-    $("#advisors .advisor").each (idx, avatar)=>
-        console.log avatar
-        $(avatar).click () =>
-            console.log "clicked on #{$(avatar).data('id')} when showingDialog = #{showingDialog}"
-            if not showingDialog
-                startUnguided($(avatar).data('id'))
-
+    $('#advisors .advisor').on('click', (e) ->
+        if $(e.currentTarget).hasClass('idle')
+            e.stopPropagation()
+            startUnguided($(this).data('id'))
+    )
 
 
     startGuided = () =>
-        showingDialog = true
+        $("#advisor .advisor").removeClass('idle')
 
         nextClick = () =>
 
@@ -63,7 +62,7 @@ setupDialog = ->
 
             if not dialog 
                 $("#advisors").unbind('click')
-                showingDialog = false
+                $("#advisors .advisor").addClass('idle')
                 return
 
             
@@ -87,43 +86,46 @@ setupDialog = ->
         showStep(0)
  
     startUnguided = (author) =>
-
+        $("#advisors .advisor").removeClass('idle')
         console.log "asked for help from #{author}"
+
+        dialog = conversation.nonGuided[author] || []
 
         nextClick = () =>
 
-        onClick = () =>
+        onClick = (e) =>
             nextClick()
 
-        getText = (index) =>
-            dialog[index]
 
-        dialog = conversation.nonGuided[author]
-
-        advisorIcon = $("#advisors .advisor[data-id='#{author}']")
-            
-        advisorIcon.popover
-            animation : false
-            title : ''
-            content : getText
-            placement: 'bottom'
-            trigger : 'manual'        
+        advisorIcon = $("#advisors .advisor[data-id='#{author}']")            
 
         showStep = (index) =>
-            if not dialog 
-                $("#advisors .advisor").popover('destroy')
+
+            $("#advisors .advisor").popover('destroy')
+            
+            message = dialog[index]
+            console.log "#{author}:#{index} '#{message}'"
+
+            if not message
                 $("#advisors").unbind('click')
-                showingDialog = false
+                $("#advisors .advisor").addClass("idle")
                 return
 
             nextClick = () =>
                 showStep(index+1)
             
+            advisorIcon.popover
+                animation : false
+                title : ''
+                content : message
+                placement: 'bottom'
+                trigger : 'manual'        
+
             advisorIcon.popover('show')            
 
-        $("#advisors").click(onClick)
-
         showStep(0)
+
+        $("#advisors").click(onClick)
 
     startGuided()
 
