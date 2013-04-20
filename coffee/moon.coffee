@@ -18,8 +18,11 @@ $ ->
         j: j
         area: area))
       $('#area-info').modal('show')
+      console.log "a"
       $('.knob').hide()
+      console.log "b"
       $('#area-info').on 'shown', ->
+        console.log "c"
         $('.knob').knob(knobDefaults)
         $('.knob').show()
   renderMoonMap()
