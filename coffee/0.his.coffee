@@ -48,27 +48,14 @@ defCell = ->
       alumina: alumina
   }
 
-
-
-build = (id, x, y) ->
-  # Check if spot is available
-  # t =  @HIS.things[id]
-  # Check resources
-  # Discount resources
-  # addEvent (turn, function) 
-  #   turn = current + t.build.turns
-  #   setInPosition(x, y, t) 
-  # setInPosition (x, y, @HIS.things['cs'])
-
-
 # beforeMeetingListener Functions
-# Turn++
 updateState = ->
   console.log "Updating Game State"
-
-cleanDialogs = ->
-
-createDialogs = ->  
+  @HIS.state.turn++
+  @HIS.state.events
+    .filter((e) -> e.turn is @HIS.state.turn)
+    .map((e) -> e.action.apply(@HIS, e.args))
+  # delete old events :-)
 
 # beforeBudgetListener Functions
 
@@ -81,7 +68,7 @@ clearBudget = ->
   console.log "Clearing budget array"
 
 @HIS =
-  beforeMeetingListener: [updateState, cleanDialogs, createDialogs] # Array of functions
+  beforeMeetingListener: [updateState] # Array of functions
   beforeMeeting: ->
     @beforeMeetingListener.map (l) -> l()
 
@@ -201,11 +188,6 @@ clearBudget = ->
   @.state.moon.cells.filter (c) ->
     keyword in c.thing.keywords unless c.thing == undefined
 
-@HIS.build = (cellId, thingId) ->
-  cell = @.state.moon.cells[cellId]
-  cell['thing'] = @.data.things[thingId]
-  # cell.thing['state'] = cell.thing.initialState
-  cell
 # Income
   # energy
   # he3
@@ -260,3 +242,31 @@ clearBudget = ->
       output: so
       gross: si - so
   }
+
+# Checks if the thing is affordable and other conditions
+@HIS.isAffordable = (id, cellIndex) ->
+  # Check resources
+
+@HIS.isBuildable = (thingId, cellIndex) ->
+  if @isAffordable(thingId, cellIndex)
+    # Check if spot is available
+    # Check if buildable
+  else
+    false
+
+# Places a Construction site in the cell (specified with the index)
+# and schedules an event that will create the thing when its done.
+@HIS.build = (thingId, cellIndex) ->
+  # Discount resources
+  @place(@.data.things.cs)
+  t = @.data.things[thingId]
+  turnWhenReady = @.state.turn + t.build.turns
+  @.state.events.push {turn: turnWhenReady, action: @place, args: [thingId, cellIndex] }
+
+
+# Places a thing in the map
+@HIS.place = (thingId, cellIndex) ->
+  cell = @.state.moon.cells[cellIndex]
+  cell['thing'] = @.data.things[thingId]
+  # cell.thing['state'] = cell.thing.initialState
+  cell
