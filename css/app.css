@@ -12,7 +12,10 @@
 .advisor {
     display: inline-block;
     width: 130px;
+}
 
+.advisor.idle {
+    cursor: pointer;
 }
 
 .advisor .icon {
