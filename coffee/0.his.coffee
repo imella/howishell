@@ -172,12 +172,23 @@ clearBudget = ->
     turns: turns
   data
 
+@HIS.generatorDef = (energy, he3, bricks, aluminum, silicon, data) ->
+  data.keywords.push('generator')
+  data['generator'] =
+    energy: energy
+    he3: he3
+    bricks: bricks
+    aluminum: aluminum
+    silicon: silicon
+  data
+
 @HIS.findCellsByThingId = (id) ->
-  @HIS.moon.cells.filter (c) -> c.thing.id == id
+  @.state.moon.cells.filter (c) -> 
+    c.thing.id == id unless c.thing == undefined 
 
 @HIS.findCellsByKeyword = (keyword) ->
-  @HIS.moon.cells.filter (c) ->
-    keyword in c.thing.keywords
+  @.state.moon.cells.filter (c) ->
+    keyword in c.thing.keywords unless c.thing == undefined
 
 @HIS.build = (cellId, thingId) ->
   cell = @.state.moon.cells[cellId]
@@ -190,10 +201,10 @@ clearBudget = ->
   # bricks
   # aluminum
   # silicon
+
 @HIS.income = ->
   incomeByResource = (keyword) ->
-    @HIS.findCellsByKeyword(keyword).map((c) -> c.thing.generator[keyword]).reduce (a, b) -> a + b
-  
+    @HIS.findCellsByKeyword(keyword).map((c) -> c.thing.generator[keyword]).reduce(((a, b) -> a + b), 0)
   {
     energy: incomeByResource('energy')
     he3: incomeByResource('he3')
