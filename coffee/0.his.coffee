@@ -229,10 +229,18 @@ clearBudget = ->
     .filter((c) -> c.thing.maintenance != undefined and c.thing.maintenance[keyword] != undefined )
     .map((c) -> c.thing.maintenance[keyword])
     .reduce(((m, b) -> m + b), 0)
+
+  ei = inputByResource('energy', (r, c) -> r)
+  eo = outputByResource('energy')
+
+  si = inputByResource('storage', (r, c) -> r)
+  so = outputByResource('storage')
+
   {
     energy: 
-      input: inputByResource('energy', (r, c) -> r)
-      output: outputByResource('energy')
+      input: ei
+      output: eo
+      gross: ei - eo
     he3: 
       input: inputByResource('he3', (r, c) -> r * c.resourceDensity.he3)
       output: outputByResource('he3')
@@ -248,6 +256,7 @@ clearBudget = ->
       input: inputByResource('silicon', (r, c) -> r * c.resourceDensity.silica)
       total: @state.resources.silicon
     storage:
-      input: inputByResource('storage', (r, c) -> r)
-      output: outputByResource('storage')
+      input: si
+      output: so
+      gross: si - so
   }
