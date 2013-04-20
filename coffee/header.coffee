@@ -3,10 +3,12 @@ $ ->
     $("#header").html(Handlebars.templates['header.hb'](HIS))
     $("#advisors").html(Handlebars.templates['advisors.hb']( advisors : $.map(HIS.data.advisors, (value, key) -> value) ))
 
+    $("#screen-meeting, #screen-budget, #screen-moon").hide()
     screen = 'meeting'
+    $("#screen-meeting").show()
     setupDialog()
 
-    $("#next-btn").click () ->
+    $("#next-btn").click () =>
         $("#screen-meeting, #screen-budget, #screen-moon").hide()
         switch screen
             when 'meeting'
@@ -19,6 +21,11 @@ $ ->
                 $("#screen-meeting").show()
                 setupDialog()
                 screen = 'meeting'
+
+    
+    
+        
+    
 
 
 
