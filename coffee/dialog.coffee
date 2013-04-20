@@ -1,19 +1,98 @@
 createRexDialog = ->
-	["I think that some solar pannels are a paramount important for operations on the moon, let's buid some"]
+	message = []
+	if @HIS.findCellsByThingId('vacuum').size is 0
+		message.push "I think that a #{@HIS.data.things.vacuum.name} could help us start the He3 harvest."
+	
+	if @HIS.findCellsByThingId('bulldozer').size is 0 and @HIS.state.turn > 10
+		message.push "I think that a #{@HIS.data.things.bulldozer.name} could greately improve our He3 income."
+	
+	if @HIS.income().energy.gross <= 0
+		message.push "Energy situation on the moon is critical, We need energy now, send batteries."
+		
+	message
 
 createYrionDialog = ->
-	["First of all we need a place to stay, "]
+	message = []
+	if @HIS.state.turn < 10
+		message.push "We need more money to begin our research on colonization."
+	
+	if @HIS.findCellsByThingId('h2o').size is 0
+		message.push "In order to populate the moon, we need water."
+		if @HIS.findCellsByThingId('printer1').size is 0
+			message.push "To create the water refinery, we need to create a #{@HIS.data.things.printer1.name}."
+		else
+			if @HIS.findCellsByThingId('printer2').size is 0 
+				message.push "We need a more advanced printer to build the H2O refinery."
+	else
+		if @HIS.findCellsByThingId('monkeys').size is 0 
+			if @HIS.resources.money < @HIS.data.things.monkeys.delivery.costs * 0.2
+				message.push " In order to send the monkeys, we need more money"
+			else if @HIS.resources.money < @HIS.data.things.monkeys.delivery.costs * 0.8
+				message.push "We are close to send the monkeys, but we need a little more money"
+			else 
+				message.push "Now that we have the money, let's build the #{@HIS.data.things.monkeys.name} dome."
+		else
+			message.push "Our final step is ahead of as, let's build the #{@HIS.data.things.monkeys.name} dome."
+	message
 
+
+#  La funcion de jake es ser un contratista del gobierno de la tierra,
+#  entrega misiones que debes cumplir en cierto tiempo.
+#  primero busca instalar un laser que require mucha energia y muchos robots.
+#  Luego quiere instalar un meteor defence shield
+#  Cada vez que logra un objetivo, recibirá mucho dinero.
 createJakeDialog = ->
-	["Safety first my fellow cityzen, let's add a "]
+	message = []
+	if @HIS.state.turn < 5
+		message.push "I'm currently on the final state of contract negociations, give me some time and I will close the deal."
+	else if @HIS.state.turn < 8
+		message.push "We are almost ready with the contract. We will need a big energy input. Consider building a #{@HIS.data.things.fusion.name}."
+	else if @HIS.state.turn < 12 
+		message.push "We are going to build a laser."
+		message.push "We will be needing many robots for its maintenance and a lot of cash."
+	else if @HIS.state.turn is 15
+		@HIS.state.firstJakeQuestCompleted = false
+		message.push "I'm very exited to tell you that we got that contract."
+		message.push "If we build the #{@HIS.data.things.laser.name}, the earth goverment is going to pay us 2000 credits."
+		message.push "The ugly part is that we only have 5 turns to acomplish this."
+		message.push "With your help we can make it!."
+	if @HIS.state.turn < 20
+		message.push "Hurry up!, we only have till turn 20 to build the #{@HIS.data.things.laser.name}."
+	if @HIS.state.turn is 20
+		if @HIS.state.firstJakeQuestCompleted
+			@HIS.state.resources.money += 2000
+			message.push "Excelent job! The earth government has just wired us the credits."
+		else
+			message.push "You failed, the quest was not completed."
+	if @HIS.state.turn is 23
+		if @HIS.state.firstJakeQuestCompleted
+			message.push "The first quest was great, let's keep doing a amazing job."
+			message.push "Get ready for the next quest!"
+		else
+		  message.push "The first quest was not acomplished, but here you have another opportunity."
+			message.push "Get ready for the next quest!"
+		message.push "If we build the #{@HIS.data.things.shield.name}, the earth goverment is going to pay us 5000 credits."
+		message.push "The ugly part is that we only have 7 turns to acomplish this."
+
+	message
 
 createWalloDialogs = ->
-	["The most important always will be science, let's add a new research facility."]
+	message = []
+	if @HIS.findCellsByThingId('s_silo').size is 0
+		message.push "I think that a #{@HIS.data.things.s_silo.name} is nedeed."
+	
+	message
 
 createTelescopeDialogs = ->
-	[" If we want to find life elsewhere, let's build a telescope and inspect the universe."]
+	message = []
+	if @HIS.findCellsByThingId('comms').size is 0
+		message.push "I think that a #{@HIS.data.things.comms.name} is nedeed."
+	
+	if @HIS.state.turn is 5
+		message.push "I think that a #{@HIS.data.things.comms.name} is nedeed."
+	message
 
-getDialogs = (turn)->
+getDialogs = ->
 	guided = []
 	nonGuided = {}
 
@@ -44,9 +123,9 @@ getDialogs = (turn)->
 				{author: 'dr_yrion', message: "Everyone of us has its own idea of what it's best, but the final decition it's up to you."}
 			]
 			nonGuided = 
-				'rex_charger': createRexDialog(turn)
-				'dr_yrion': createYrionDialog(turn)
-				'jake': createJakeDialog(turn)
+				'rex_charger': createRexDialog()
+				'dr_yrion': createYrionDialog()
+				'jake': createJakeDialog()
 				'dr_wallo': createWalloDialogs()
 				'col_telescope': createTelescopeDialogs()
 
