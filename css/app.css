@@ -12,6 +12,7 @@
 .advisor {
     display: inline-block;
     width: 130px;
+    margin: 20px;
 }
 
 .advisor.idle {
@@ -20,4 +21,8 @@
 
 .advisor .icon {
     font-size: 100px;
+}
+
+#advisors {
+  padding: 100px 150px;
 }
