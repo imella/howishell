@@ -64,6 +64,15 @@ createJakeDialog = ->
 			message.push "Excelent job! The earth government has just wired us the credits."
 		else
 			message.push "You failed, the quest was not completed."
+	if @HIS.state.turn is 23
+		if @HIS.state.firstJakeQuestCompleted
+			message.push "The first quest was great, let's keep doing a amazing job."
+			message.push "Get ready for the next quest!"
+		else
+		  message.push "The first quest was not acomplished, but here you have another opportunity."
+			message.push "Get ready for the next quest!"
+		message.push "If we build the #{@HIS.data.things.shield.name}, the earth goverment is going to pay us 5000 credits."
+		message.push "The ugly part is that we only have 7 turns to acomplish this."
 
 	message
 
