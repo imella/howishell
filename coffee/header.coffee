@@ -89,7 +89,7 @@ setupDialog = ->
         $("#advisors .advisor").removeClass('idle')
         console.log "asked for help from #{author}"
 
-        dialog = conversation.nonGuided[author] || []
+        dialog = conversation.nonGuided[author] || [ "I've got no counsel for now" ]
 
         nextClick = () =>
 
