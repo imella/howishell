@@ -8,3 +8,13 @@
   height: 78px;
   width: 78px;
 }
+
+.advisor {
+    display: inline-block;
+    width: 130px;
+
+}
+
+.advisor .icon {
+    font-size: 100px;
+}
