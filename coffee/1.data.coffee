@@ -88,8 +88,10 @@
   )
 
 @HIS.data.things.battery = @HIS.deliveryDef(20,
-    @HIS.dataDef('battery', 'Battery', 'battery.png', ['energy'])
-)
+  @HIS.generatorDef(10, 0, 0, 0, 0, 0,
+      @HIS.dataDef('battery', 'Battery', 'battery.png', ['energy'])
+    )
+  )
 
 #####################
 # FACTORIES         #
