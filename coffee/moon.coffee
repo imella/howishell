@@ -1,4 +1,5 @@
 $ ->
+
   renderMoonStats = ->
     state = HIS.resourceStatus()
     context = {resources: HIS.resourceStatus(), state: HIS.state}
@@ -67,3 +68,6 @@ $ ->
         $('.knob').show()).mouseleave ->
           renderMoonStats()
   renderMoonMap()
+
+
+  HIS.beforeMoonListener.push(renderMoonMap)
