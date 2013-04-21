@@ -1,5 +1,4 @@
 $ ->
-
   renderMoonStats = ->
     state = HIS.resourceStatus()
     context = {resources: HIS.resourceStatus(), state: HIS.state}
@@ -43,6 +42,7 @@ $ ->
       $('#area-info').on 'shown', ->
         $('.knob').knob(knobDefaults)
         $('.knob').show()
+        $('#power').bootstrapSwitch()
         $('.building').on 'click', ->
           HIS.build $(@).data('id'), pos
           $('#area-info').modal('hide')

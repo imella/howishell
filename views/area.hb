@@ -55,9 +55,48 @@
 <div class="modal-body">
   {{#if area.thing}}
     {{#with area.thing}}
-      <h3><i class="icon {{image_url}}"></i> {{name}}</h3>
-      <div class="switch" data-on="success" data-off="error">
-          <input type="checkbox" checked />
+      <div class="row-fluid">
+        <div class="span4 center">
+          <i class="icon icon-4x {{image_url}}"></i>
+          <br>
+          <strong>{{name}}</strong>
+          <br>
+          {{#if maintenance}}
+            <div id="power" class="switch" data-on="success" data-off="danger">
+              <input type="checkbox"
+                {{#if working}}
+                  checked
+                {{/if}}/>
+            </div>
+            <br>
+            <br>
+          {{/if}}
+        </div>
+        <div class="span4">
+          {{#if maintenance}}
+            <strong>Maintenance:</strong>
+            <br>
+            {{#with maintenance}}
+              <span class="label label-warning">{{energy}} mW</span>
+              <span class="label label-warning">{{robots}} SCV</span>
+              <span class="label label-warning">{{he3}} <sup>3</sup>He</span>
+            {{/with}}
+          {{/if}}
+        </div>
+        <div class="span4">
+          {{#if generator}}
+            <strong>Generation:</strong>
+            <br>
+            {{#with generator}}
+              <span class="label label-success">{{energy}} mW</span>
+              <span class="label label-success">{{bricks}} Bricks</span>
+              <span class="label label-success">{{aluminum}} Al</span>
+              <span class="label label-success">{{silicon}} Si</span>
+              <span class="label label-success">{{he3}} <sup>3</sup>He</span>
+              <span class="label label-success">{{storage}} kg</span>
+            {{/with}}
+          {{/if}}
+        </div>
       </div>
     {{/with}}
   {{else}}
@@ -66,11 +105,13 @@
       <tbody>
         {{#each buildings}}
           <tr class="building pointer" data-id="{{id}}">
-            <td class="center">
-              <i class="icon icon-4x {{image_url}}"></i>
-              <br>
-              <br>
-              <strong>{{name}}</strong>
+            <td>
+              <div class="center">
+                <i class="icon icon-4x {{image_url}}"></i>
+                <br>
+                <br>
+                <strong>{{name}}</strong>
+              </div>
             </td>
             <td>
               <strong>Cost:</strong>

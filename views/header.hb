@@ -4,7 +4,8 @@
         <span class="badge badge-info">{{state.turn}}</span>
     </div>
 
-    <div class="span2 pull-right"><a href="#" class="btn next-btn"> Next <i class="icon icon-large icon-arrow-right"></i></a></div>
+    <div class="span2 pull-right">
+    <a href="#" class="btn next-btn pull-right"> Next <i class="icon icon-large icon-arrow-right"></i></a></div>
 
 </div>
 <div id="resource-status" class="row" >
