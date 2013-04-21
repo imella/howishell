@@ -8,6 +8,8 @@ $ ->
     updateInterface()
     
     setupDialog()
+
+    HIS.beforeMeetingListener.push(()-> HIS.state.resources.money += 100)
     
     $("#header").on(".next-btn").click () =>
         $("#screen-meeting, #screen-budget, #screen-moon").hide()
