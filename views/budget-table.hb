@@ -23,19 +23,19 @@
     {{/each}}
 
     {{#each deliverables}}
-    <tr>
+    <tr class="deliverable" data-id="{{id}}">
       <td>
         <strong>{{name}}</strong>
       </td>
       <td class="amount">0</td>
-      <td>{{unit_cost}}</td>
-      <td class="total_cost">0</td>
+      <td>{{delivery.costs}}</td>
+      <td class="total-cost">0</td>
       <td>
         <a href="#" class="btn">
-          <i class="icon icon-plus" data-id="{{id}}"></i>
+          <i class="icon icon-plus"></i>
         </a>
         <a href="#" class="btn">
-          <i class="icon icon-minus" data-id="{{id}}"></i>
+          <i class="icon icon-minus""></i>
         </a>
       </td>
     </tr>

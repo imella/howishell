@@ -1,12 +1,14 @@
-$ ->
-    HIS.state.turn = 0
-    $("#screen-meeting, #screen-budget, #screen-moon").hide()
-    $("#screen-meeting").show()
+$ ->    
     $("#advisors").html(Handlebars.templates['advisors.hb']( advisors : $.map(HIS.data.advisors, (value, key) -> value) ))
+
+    $("#screen-meeting, #screen-budget, #screen-moon").hide()
     screen = 'meeting'
+    HIS.beforeMeeting()
+    $("#screen-meeting").show()
     setupDialog()
     updateInterface()
-    HIS.beforeMeeting()
+
+    
     $("#header").on(".next-btn").click () =>
         $("#screen-meeting, #screen-budget, #screen-moon").hide()
         switch screen
