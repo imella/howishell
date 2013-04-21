@@ -46,7 +46,7 @@ createJakeDialog = ->
 	if @HIS.state.turn < 5
 		message.push "I'm currently on the final state of contract negociations, give me some time and I will close the deal."
 	else if @HIS.state.turn < 8
-		message.push "We are almost ready with the contract. We will need a big energy input. Consider building a #{@HIS.data.things.fusion.name}."
+		message.push "We are almost ready with the contract. We will need a big energy input. Consider building a #{@HIS.data.things.fusionEnergy.name}."
 	else if @HIS.state.turn < 12 
 		message.push "We are going to build a laser."
 		message.push "We will be needing many robots for its maintenance and a lot of cash."
@@ -94,6 +94,10 @@ createWalloDialogs = ->
 			["@$%&#@?¿&%$"]
 		when 4
 			["If you wanna be like me, dont loose hope."]
+		when 7
+			["Remember to check your budget."]
+		when 13
+			["Jake can help you get more money."]
 		else
 			["Woff."]
   
