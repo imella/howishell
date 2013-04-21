@@ -9,7 +9,7 @@ $ ->
     $('#moon-map').html(Handlebars.templates['moon.hb'](
       rows: moonMap.map((cells, i)-> {cells: cells, rowNumber: i}),
       colNumber: [0..8]))
-    $('.area').hover ->
+    $('.area').hover(->
       i = $(@).data('i')
       j = $(@).data('j')
       area = HIS.state.moon.cells[i*j]
@@ -19,7 +19,8 @@ $ ->
         area: area))
       $('.knob').hide()
       $('.knob').knob(knobDefaults)
-      $('.knob').show()
+      $('.knob').show()).mouseleave ->
+        $('#area-stats').empty()
     $('.area').on 'click', ->
       i = $(@).data('i')
       j = $(@).data('j')
@@ -27,7 +28,8 @@ $ ->
       $('#area-info').html(Handlebars.templates['area.hb'](
         i: i
         j: j
-        area: area))
+        area: area
+        his: HIS))
       $('#area-info').modal('show')
       $('.knob').hide()
       $('#area-info').on 'shown', ->

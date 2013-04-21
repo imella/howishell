@@ -89,3 +89,8 @@
 #header #resource-status {
   margin-top: 10px;
 }
+
+#area-info{
+  width: 750px;
+  margin-left: -375px;
+}
