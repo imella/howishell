@@ -1,8 +1,6 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <h3>Area {{i}} - {{j}}</h3>
-</div>
-<div class="modal-body">
   <div class="row-fluid">
     {{#with area.resourceDensity}}
     <div class="span3 center">
@@ -39,71 +37,84 @@
     </div>
     {{/with}}
   </div>
-  <hr>
+  <h4>Prefabrecated</h4>
+  <table class="table">
+    <thead>
+      <td></td>
+      <td></td>
+    </thead>
+    <tbody>
+      {{#each placeable}}
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <h4>Buildings</h4>
+</div>
+<div class="modal-body">
   {{#if area.thing}}
     {{#with area.thing}}
     {{/with}}
   {{else}}
-    <h4>Prefabrecated</h4>
-    {{#each placeable}}
-      <table class="table">
-        <thead>
-          <td></td>
-          <td></td>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    {{/each}}
-    <hr>
-    <h4>Buildings</h4>
-    {{#each buildings}}
-      <table class="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Cost</th>
-            <th>Mantainance</th>
-            <th>Generation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><i class="icon {{image_url}}"></i>{{name}}</td>
-            <td>
-              {{#with build}}
-                <span class="label label-important">$ {{costs}}</span>
-                <span class="label label-important">{{robots}} SCV</span>
-                <span class="label label-important">{{turns}} Turns</span>
-                <span class="label label-important">{{bricks}} Bricks</span>
-                <span class="label label-important">{{aluminum}} Al</span>
-                <span class="label label-important">{{silicon}} Silica</span>
-              {{/with}}
+    <table id="buildings" class="table table-hover table-striped">
+      <tbody>
+        {{#each buildings}}
+          <tr class="building pointer">
+            <td class="center">
+              <i class="icon icon-4x {{image_url}}"></i>
+              <br>
+              <br>
+              <strong>{{name}}</strong>
             </td>
             <td>
-              {{#with mantainance}}
-                <span class="label label-warning">{{energy}} mW</span>
-                <span class="label label-warning">{{robots}} SCV</span>
-                <span class="label label-warning">{{he3}} <sup>3</sup>He</span>
-              {{/with}}
+              <strong>Cost:</strong>
+              <br>
+              {{#if build}}
+                {{#with build}}
+                  <span class="label label-important">$ {{costs}}</span>
+                  <span class="label label-important">{{robots}} SCV</span>
+                  <span class="label label-important">{{turns}} Turns</span>
+                  <span class="label label-important">{{bricks}} Bricks</span>
+                  <span class="label label-important">{{aluminum}} Al</span>
+                  <span class="label label-important">{{silicon}} Silica</span>
+                {{/with}}
+              {{/if}}
             </td>
             <td>
-              {{#with generator}}
-                <span class="label label-success">{{energy}} mW</span>
-                <span class="label label-success">{{bricks}} Bricks</span>
-                <span class="label label-success">{{aluminum}} Al</span>
-                <span class="label label-success">{{silicon}} Si</span>
-                <span class="label label-success">{{he3}} <sup>3</sup>He</span>
-                <span class="label label-success">{{storage}} kg</span>
-              {{/with}}
+              {{#if maintenance}}
+                <strong>Maintenance:</strong>
+                <br>
+                {{#with maintenance}}
+                  <span class="label label-warning">{{energy}} mW</span>
+                  <span class="label label-warning">{{robots}} SCV</span>
+                  <span class="label label-warning">{{he3}} <sup>3</sup>He</span>
+                {{/with}}
+              {{/if}}
+            </td>
+            <td>
+              {{#if generator}}
+                <strong>Generation:</strong>
+                <br>
+                {{#with generator}}
+                  <span class="label label-success">{{energy}} mW</span>
+                  <span class="label label-success">{{bricks}} Bricks</span>
+                  <span class="label label-success">{{aluminum}} Al</span>
+                  <span class="label label-success">{{silicon}} Si</span>
+                  <span class="label label-success">{{he3}} <sup>3</sup>He</span>
+                  <span class="label label-success">{{storage}} kg</span>
+                {{/with}}
+              {{/if}}
             </td>
           </tr>
-        </tbody>
-      </table>
-    {{/each}}
+        {{/each}}
+      </tbody>
+    </table>
   {{/if}}
+</div>
+<div class="modal-footer">
+  <button id="build-in-area" data-dismiss="modal" aria-hidden="true"
+    class="disabled btn btn-large btn-primary">Build</button>
 </div>

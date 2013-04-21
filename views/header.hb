@@ -1,7 +1,10 @@
 <div class="row">
-    <div class="span4 pull-left">Turn: {{state.turn}}</div>
+    <div class="span4 pull-left">
+        <strong>Turn: </strong>
+        <span class="badge badge-info">{{state.turn}}</span>
+    </div>
 
-        <a href="#" class="pull-right btn next-btn"> Next <i class="icon icon-arrow-right"></i></a>
+        <a href="#" class="pull-right btn next-btn"> Next <i class="icon icon-large icon-arrow-right"></i></a>
 
 </div>
 <div id="resource-status" class="row" >

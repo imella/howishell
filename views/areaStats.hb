@@ -1,4 +1,4 @@
-<h3>Area {{i}} - {{j}}</h3>
+<h3 class="center">Area {{i}} - {{j}}</h3>
 <div class="center">
   {{#with area.resourceDensity}}
     <strong>Rock</strong>

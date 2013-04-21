@@ -93,4 +93,13 @@
 #area-info{
   width: 750px;
   margin-left: -375px;
+  margin-top: -50px;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.building.selected{
+  background-color: #3a3f44;
 }

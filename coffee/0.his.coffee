@@ -2,7 +2,7 @@
 # resources: # energy must be calculated based on what's installed on the moon
 #   money: 10
 #   h3: 0
- 
+
 
 # cell defintion
   # thing
@@ -10,7 +10,7 @@
     # thing data
     # actions
   # resourceDensity (must sum 1)
-    # rock 
+    # rock
     # silica 0.45
     # he3 0.01
     # alumina 0.15
@@ -24,7 +24,7 @@
     # Array of cell indices
 
 initializeMoon = (width, height) ->
-  moon = 
+  moon =
     width: width
     height: height
     cells: []
@@ -64,7 +64,7 @@ updateState = ->
 
   # Reduce batteries
   for battery in @HIS.findCellsByThingId('battery')
-    battery.thing.generator.energy -= 1 if battery.thing.generator.energy > 0 
+    battery.thing.generator.energy -= 1 if battery.thing.generator.energy > 0
 
 # beforeBudgetListener Functions
 
@@ -74,7 +74,7 @@ addBuget = ->
   console.log "Adding budget to the moon"
   for k, i of @HIS.state.budget.regular
     @HIS.state.availableToPlace[i.id].quantity += i.quantity
-  
+
   # I add the robots sent directly to the state
   @HIS.state.resources.robots += @HIS.state.availableToPlace.scv.quantity
   @HIS.state.availableToPlace.scv.quantity = 0
@@ -153,14 +153,14 @@ clearBudget = ->
       specialty: 'Secretary of Military and Strategic Defense' # Expansion and Survival
 
 
-@HIS.dataDef = (id, name, image_url, keywords) -> 
+@HIS.dataDef = (id, name, image_url, keywords) ->
   {
     id: id
     name: name
     image_url: image_url
     keywords: keywords
   }
-  
+
 
 @HIS.buildDef = (costs, factoryIds, robots, turns, bricks, aluminum, silicon, data) ->
   data.keywords.push('build')
@@ -200,8 +200,8 @@ clearBudget = ->
   data
 
 @HIS.findCellsByThingId = (id) ->
-  @.state.moon.cells.filter (c) -> 
-    c.thing.id == id unless c.thing == undefined 
+  @.state.moon.cells.filter (c) ->
+    c.thing.id == id unless c.thing == undefined
 
 @HIS.findCellsByKeyword = (keyword) ->
   @.state.moon.cells.filter (c) ->
@@ -238,22 +238,22 @@ clearBudget = ->
   so = outputByResource('storage')
 
   {
-    energy: 
+    energy:
       input: ei
       output: eo
       gross: ei - eo
-    he3: 
+    he3:
       input: inputByResource('he3', (r, c) -> r * c.resourceDensity.he3)
       output: outputByResource('he3')
       total: @state.resources.he3
-    bricks: 
+    bricks:
       input: inputByResource('bricks', (r, c) -> r * c.resourceDensity.rock)
       output: outputByResource('bricks')
       total: @state.resources.bricks
-    aluminum: 
+    aluminum:
       input: inputByResource('aluminum', (r, c) -> r * c.resourceDensity.alumina)
       total: @state.resources.aluminum
-    silicon: 
+    silicon:
       input: inputByResource('silicon', (r, c) -> r * c.resourceDensity.silica)
       total: @state.resources.silicon
     storage:
@@ -263,10 +263,10 @@ clearBudget = ->
   }
 
 @HIS.checkBuildResources = (thingId) ->
-  @data.things[thingId].build.costs <= @state.resources.money && 
-    @data.things[thingId].build.aluminum <= @state.resources.aluminum && 
-    @data.things[thingId].build.silicon <= @state.resources.silicon && 
-    @data.things[thingId].build.bricks <= @state.resources.bricks && 
+  @data.things[thingId].build.costs <= @state.resources.money &&
+    @data.things[thingId].build.aluminum <= @state.resources.aluminum &&
+    @data.things[thingId].build.silicon <= @state.resources.silicon &&
+    @data.things[thingId].build.bricks <= @state.resources.bricks &&
     @data.things[thingId].build.robots <= @state.resources.robots
 
 @HIS.discountBuildResources = (thingId) ->
@@ -282,13 +282,13 @@ clearBudget = ->
     'build' in @HIS.data.things[thingId].keywords
 
 @HIS.createSCV = ()->
-  discountBuildResources('scv')
+  @discountBuildResources('scv')
   @state.resources.robots++
 
 # Places a Construction site in the cell (specified with the index)
 # and schedules an event that will create the thing when its done.
 @HIS.build = (thingId, cellIndex) ->
-  discountBuildResources(thingId)
+  @discountBuildResources(thingId)
   @place('cs', cellIndex)
   t = @data.things[thingId]
   if t.build.costs > 0
