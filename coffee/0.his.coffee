@@ -48,9 +48,14 @@ defCell = ->
       alumina: Number((alumina).toFixed(1))
   }
 
+initialAvailableToPlace = () ->
+  (i for k,i of @HIS.data.things when 'delivery' in i.keywords).reduce(((m, i) -> m[i.id] = {id: i.id, quantity: 0}; m),{})
+
 # beforeMeetingListener Functions
 updateState = ->
   console.log "Updating Game State"
+  @HIS.state.availableToPlace ?= initialAvailableToPlace()
+
   @HIS.state.turn++
   @HIS.state.events
     .filter((e) -> e.turn is @HIS.state.turn)
@@ -63,9 +68,13 @@ updateState = ->
 # beforeMoonListener Functinos
 addBuget = ->
   console.log "Adding budget to the moon"
+  for k, i of @HIS.state.budget.regular
+    @HIS.state.availableToPlace[i.id].quantity += i.quantity
+
 
 clearBudget = ->
   console.log "Clearing budget array"
+  @HIS.state.budget.regular = initialAvailableToPlace()
 
 @HIS =
   beforeMeetingListener: [updateState] # Array of functions
@@ -91,6 +100,7 @@ clearBudget = ->
     aluminum: 0
     silicon: 0
     bricks: 0
+    robots: 0
   moon: initializeMoon(12, 8)
   currentDialog:
     guided: ''
@@ -243,18 +253,29 @@ clearBudget = ->
       gross: si - so
   }
 
-# Checks if the thing is affordable and other conditions
-@HIS.isAffordable = (id, cellIndex) ->
-  # Check resources
+@HIS.checkBuildResources = (thingId) ->
+  @data.things[thingId].build.costs <= @state.resources.money && 
+    @data.things[thingId].build.aluminum <= @state.resources.aluminum && 
+    @data.things[thingId].build.silicon <= @state.resources.silicon && 
+    @data.things[thingId].build.bricks <= @state.resources.bricks && 
+    @data.things[thingId].build.robots <= @state.resources.robots
+
+@HIS.discountBuildResources = (thingId) ->
+  @state.resources.money -= @data.things[thingId].build.costs
+  @state.resources.aluminum -= @data.things[thingId].build.aluminum
+  @state.resources.silicon -= @data.things[thingId].build.silicon
+  @state.resources.bricks -= @data.things[thingId].build.bricks
 
 @HIS.isBuildable = (thingId, cellIndex) ->
-  if @isAffordable(thingId, cellIndex)
+  if @checkBuildResources(thingId)
     # Check if spot is available
     # Check if buildable
   else
     false
 
-@HIS.create = (thingId) ->
+@HIS.buildSCV = ()->
+  discountBuildResources('scv')
+  @state.resources.robots++
 
 # Places a Construction site in the cell (specified with the index)
 # and schedules an event that will create the thing when its done.
