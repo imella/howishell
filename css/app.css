@@ -111,7 +111,7 @@
   cursor: pointer;
 }
 
-.placeable:hover{
+.building-span:hover, .placeable:hover{
   background-color: #3a3f44;
 }
 

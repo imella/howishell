@@ -1,6 +1,7 @@
-<div class="modal-header">
+<div class="modal-header center">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   <h3>Area {{i}} - {{j}}</h3>
+  <br>
   <div class="row-fluid">
     {{#with area.resourceDensity}}
     <div class="span3 center">
@@ -52,6 +53,9 @@
     </div>
   {{/unless}}
 </div>
+{{#unless area.thing}}
+  <h4 class="center">Buildings</h4>
+{{/unless}}
 <div class="modal-body">
   {{#if area.thing}}
     {{#with area.thing}}
@@ -100,20 +104,16 @@
       </div>
     {{/with}}
   {{else}}
-    <h4>Buildings</h4>
-    <table id="buildings" class="table table-hover table-striped">
-      <tbody>
-        {{#each buildings}}
-          <tr class="building pointer" data-id="{{id}}">
-            <td>
-              <div class="center">
-                <i class="icon icon-4x {{image_url}}"></i>
-                <br>
-                <br>
-                <strong>{{name}}</strong>
-              </div>
-            </td>
-            <td>
+    {{#each buildings}}
+      <div class="row-fluid building pointer" data-id="{{id}}">
+        <div class="span12 well building-span">
+          <div class="row-fluid">
+            <div class="span3 center">
+              <i class="icon icon-4x {{image_url}}"></i>
+              <br>
+              <strong>{{name}}</strong>
+            </div>
+            <div class="span3">
               <strong>Cost:</strong>
               <br>
               {{#if build}}
@@ -126,8 +126,8 @@
                   <span class="label label-important">{{silicon}} Si</span>
                 {{/with}}
               {{/if}}
-            </td>
-            <td>
+            </div>
+            <div class="span3">
               {{#if maintenance}}
                 <strong>Maintenance:</strong>
                 <br>
@@ -137,8 +137,8 @@
                   <span class="label label-warning">{{he3}} <sup>3</sup>He</span>
                 {{/with}}
               {{/if}}
-            </td>
-            <td>
+            </div>
+            <div class="span3">
               {{#if generator}}
                 <strong>Generation:</strong>
                 <br>
@@ -151,11 +151,11 @@
                   <span class="label label-success">{{storage}} kg</span>
                 {{/with}}
               {{/if}}
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
   {{/if}}
 </div>
 <div class="modal-footer">
