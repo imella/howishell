@@ -82,8 +82,10 @@
     cursor: pointer;
 }
 
-.advisor .icon {
-    font-size: 100px;
+.advisor img {
+  height: 96px;
+  width: 96px;
+
 }
 
 .center{
