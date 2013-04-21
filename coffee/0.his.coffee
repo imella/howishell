@@ -106,11 +106,11 @@ clearBudget = ->
   firstJakeQuestCompleted: 'notGiven'
   secondJakeQuestCompleted: 'notGiven'
   resources:
-    money: 10
+    money: 300
     he3: 0
-    aluminum: 0
-    silicon: 0
-    bricks: 0
+    aluminum: 50
+    silicon: 50
+    bricks: 150
     robots: 0
   moon: initializeMoon(12, 8)
   currentDialog:
