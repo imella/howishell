@@ -1,4 +1,5 @@
-<table class="table">
+<img src="img/NASA_logo.svg" class="span2">
+<table class="table table-striped table-hover">
   <thead>
     <tr>
       <th>Item</th>

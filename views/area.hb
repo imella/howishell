@@ -44,7 +44,24 @@
     {{#with area.thing}}
     {{/with}}
   {{else}}
-    {{#each his.state.availableToPlace}}
+    <h4>Prefabrecated</h4>
+    {{#each placeable}}
+      <table class="table">
+        <thead>
+          <td></td>
+          <td></td>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    {{/each}}
+    <hr>
+    <h4>Buildings</h4>
+    {{#each buildings}}
       <table class="table">
         <thead>
           <tr>

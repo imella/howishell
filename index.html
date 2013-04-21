@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/app.css">
 
     <script src="js/jquery-2.0.0.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/handlebars.runtime.js"></script>
     <script src="js/templates.js"></script>
@@ -18,12 +19,14 @@
   <body>
 
     <div class="container">
-      
+
       <div id="header" class="row">
 
       </div>
       <div id="screens" class="well row">
         <div id="screen-meeting" class="screen row">
+            <img src="img/NASA_logo.svg" class="span2">
+          </span>
           <div id="advisors"></div>
         </div>
         <div id="screen-budget">
@@ -64,6 +67,9 @@
             <div id="area-stats"></div>
           </div>
           <div id="moon-map" class="span9">
+            <img id="moon-img" src="img/moon.png" style="margin: 26px; width: 648px; height: 575px;">
+            <div id="moon-areas">
+            </div>
           </div>
         </div>
       </div>
