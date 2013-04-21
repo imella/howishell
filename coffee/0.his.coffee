@@ -326,6 +326,10 @@ clearBudget = ->
 @HIS.place = (thingId, cellIndex) ->
   console.log "place thingId=#{thingId} cellIndex=#{cellIndex}"
   cell = @state.moon.cells[cellIndex]
-  cell['thing'] = $.extend(true, {}, @data.things[thingId])
+  t = @data.things[thingId]
+  s = {}
+  s = {working: false} if 'maintenance' in t.keywords
+
+  cell['thing'] = $.extend(true, s, t)
   # cell.thing['state'] = cell.thing.initialState
   cell
