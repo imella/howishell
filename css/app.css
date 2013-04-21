@@ -80,3 +80,12 @@
 .center{
   text-align: center;
 }
+
+#header {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#header #resource-status {
+  margin-top: 10px;
+}

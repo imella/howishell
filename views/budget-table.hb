@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each special_equipment}}
+    {{#each specials}}
     <tr>
       <td>
         <strong>{{name}}</strong>
@@ -21,7 +21,7 @@
     </tr>
     {{/each}}
 
-    {{#each budget_items}}
+    {{#each deliverables}}
     <tr>
       <td>
         <strong>{{name}}</strong>
@@ -41,6 +41,6 @@
     {{/each}}
   <tr>
     <td colspan="4">Total</td>
-    <td>{{total}}</td>
+    <td class="total">{{total}}</td>
   </tbody>
 </table>
