@@ -85,8 +85,18 @@ createJakeDialog = ->
 # El Dr. Wallo esta encargado de realizar investigación en la luna.
 # Woff
 createWalloDialogs = ->
-	console.log @HIS.state.turn, 'woof'
-	["woff."]
+	switch @HIS.state.turn
+		when 1
+			["Good luck my fellow citizen!"]
+		when 2
+			["Remember, you need robots and energy to keep this journey!"]
+		when 3
+			["@$%&#@?¿&%$"]
+		when 4
+			["If you wanna be like me, dont loose hope."]
+		else
+			["Woff."]
+  
 
 
 # El Colonel Telescope esta encargado de instalar sitios 
