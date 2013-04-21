@@ -51,7 +51,7 @@ createJakeDialog = ->
 		message.push "We are going to build a laser."
 		message.push "We will be needing many robots for its maintenance and a lot of cash."
 	else if @HIS.state.turn is 15
-		@HIS.state.firstJakeQuestCompleted = false
+		@HIS.state.firstJakeQuestCompleted = 'given'
 		message.push "I'm very exited to tell you that we got that contract."
 		message.push "If we build the #{@HIS.data.things.laser.name}, the earth goverment is going to pay us 1000 credits."
 		message.push "The ugly part is that we only have 5 turns to acomplish this."
@@ -59,17 +59,16 @@ createJakeDialog = ->
 	if @HIS.state.turn < 20
 		message.push "Hurry up!, we only have till turn 20 to build the #{@HIS.data.things.laser.name}."
 	if @HIS.state.turn is 20
-		if @HIS.state.firstJakeQuestCompleted
+		if @HIS.state.firstJakeQuestCompleted is 'completed'
 			@HIS.state.resources.money += 1000
 			message.push "Excelent job! The earth government has just wired us the credits."
 		else
 			message.push "You failed, the quest was not completed."
 	
-	if @HIS.state.firstJakeQuestCompleted
+	if @HIS.state.firstJakeQuestCompleted is 'completed'
 		if @HIS.state.turn is 23
 			message.push "The first quest was great, let's keep doing a amazing job."
 			message.push "Get ready for the next quest!"
-			@HIS.state.secondJakeQuestCompleted = false
 		else if @HIS.state.turn < 26
 			message.push "I'm very exited to tell you that we got another contract."
 		else if @HIS.state.turn < 29
@@ -86,6 +85,7 @@ createJakeDialog = ->
 # El Dr. Wallo esta encargado de realizar investigación en la luna.
 # Woff
 createWalloDialogs = ->
+	console.log @HIS.state.turn, 'woof'
 	["woff."]
 
 
@@ -104,7 +104,7 @@ createTelescopeDialogs = ->
 		message.push "Our outer space exploration is going very good. Nice!"
 	message
 
-getDialogs = ->
+window.getDialogs = ->
 	guided = []
 	nonGuided = {}
 
@@ -140,5 +140,11 @@ getDialogs = ->
 				'jake': createJakeDialog()
 				'dr_wallo': createWalloDialogs()
 				'col_telescope': createTelescopeDialogs()
-
+		else
+			nonGuided = 
+				'rex_charger': createRexDialog()
+				'dr_yrion': createYrionDialog()
+				'jake': createJakeDialog()
+				'dr_wallo': createWalloDialogs()
+				'col_telescope': createTelescopeDialogs()
 	return { guided : guided, nonGuided : nonGuided }
