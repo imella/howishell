@@ -47,8 +47,8 @@ updateInterface = ->
 setupDialog = ->
 
     $("#advisors, #advisors .advisor").unbind('click')
-    $("#advisor .advisor").removeClass('idle').popover('destroy')
-    $("#advisor").off('click')
+    $("#advisors .advisor").removeClass('idle').popover('destroy')
+    $("#advisors").off('click')
     console.log "set up dialog"
     conversation = getDialogs()
     console.log conversation.nonGuided
