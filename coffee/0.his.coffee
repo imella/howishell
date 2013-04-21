@@ -58,8 +58,8 @@ updateState = ->
 
   @HIS.state.turn++
   @HIS.state.events
-    .filter((e) -> e.turn is @HIS.state.turn)
-    .map((e) -> e.action.apply(@HIS, e.args))
+    .filter((e) -> e.turn is HIS.state.turn)
+    .map((e) -> e.action.apply(HIS, e.args))
   # delete old events :-)
 
   # Reduce batteries
@@ -306,11 +306,14 @@ clearBudget = ->
     @state.secondJakeQuestCompleted = 'completed'
     @win("Defense and Expansion")
   turnWhenReady = @state.turn + t.build.turns
-  @state.events.push {turn: turnWhenReady, action: ((thingId, cellIndex) -> @place(thingId, cellIndex); @state.resources.robots += @data.things[thingId].build.robots), args: [thingId, cellIndex] }
+  actionWhenReady = (thingId, cellIndex) ->
+    @place(thingId, cellIndex)
+    @state.resources.robots += @data.things[thingId].build.robots
+  @state.events.push {turn: turnWhenReady, action: actionWhenReady, args: [thingId, cellIndex] }
 
 @HIS.buildables = ->
   $.map(@data.things, (a) -> a)
-    .filter((t) -> 
+    .filter((t) ->
       return false if t.id is 'laser' and not (HIS.state.firstJakeQuestCompleted is 'given')
       return false if t.id is 'shield' and not (HIS.state.secondJakeQuestCompleted is 'given')
       t.build && HIS.checkBuildResources(t.id))
