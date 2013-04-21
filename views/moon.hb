@@ -14,7 +14,10 @@
       </span>
     </div>
     {{#each cells}}
-      <div class="area" data-i="{{i}}" data-j="{{j}}">
+      <div class="area center" data-i="{{i}}" data-j="{{j}}">
+        {{#if area.thing}}
+          <i class="icon icon-4x {{area.thing.image_url}}"></i>
+        {{/if}}
       </div>
     {{/each}}
   </div>
