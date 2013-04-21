@@ -80,9 +80,9 @@
                   <span class="label label-important">$ {{costs}}</span>
                   <span class="label label-important">{{robots}} SCV</span>
                   <span class="label label-important">{{turns}} Turns</span>
-                  <span class="label label-important">{{bricks}} Bricks</span>
+                  <span class="label label-important">{{bricks}} kg</span>
                   <span class="label label-important">{{aluminum}} Al</span>
-                  <span class="label label-important">{{silicon}} Silica</span>
+                  <span class="label label-important">{{silicon}} Si</span>
                 {{/with}}
               {{/if}}
             </td>

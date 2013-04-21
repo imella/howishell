@@ -5,6 +5,7 @@ $ ->
     $("#area-stats").html(Handlebars.templates['globalStats.hb'](context))
   renderMoonMap = ->
     console.log "Rendering Moon"
+    #HIS.build()
     moonMap = [0..7].map (i)->
                 [0..8].map (j)->
                   i: i
