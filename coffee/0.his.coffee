@@ -108,9 +108,9 @@ clearBudget = ->
   resources:
     money: 300
     he3: 0
-    aluminum: 50
-    silicon: 50
-    bricks: 150
+    aluminum: 500
+    silicon: 500
+    bricks: 1500
     robots: 0
   moon: initializeMoon(12, 8)
   currentDialog:
@@ -316,7 +316,7 @@ clearBudget = ->
     .filter((t) ->
       return false if t.id is 'laser' and not (HIS.state.firstJakeQuestCompleted is 'given')
       return false if t.id is 'shield' and not (HIS.state.secondJakeQuestCompleted is 'given')
-      t.build && HIS.checkBuildResources(t.id) && 'build' in @HIS.data.things[thingId].keywords )
+      t.build && HIS.checkBuildResources(t.id) && ('build' in t.keywords) )
 
 @HIS.isPlaceable = (thingId, cellIndex) ->
   @state.moon.cells[cellIndex].thing == undefined &&
