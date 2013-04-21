@@ -3,21 +3,20 @@
   <thead>
     <tr>
       <th>Item</th>
-      <th>Cantidad</th>
-      <th>Costo</th>
-      <th>Sub-total</th>
+      <th>Amount</th>
+      <th>Cost</th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     {{#each specials}}
     <tr>
-      <td>
+      <td colspan="2">
         <strong>{{name}}</strong>
       </td>
+      <td>{{value}}</td>
       <td></td>
-      <td></td>
-      <td>{{total_cost}}</td>
       <td></td>
     </tr>
     {{/each}}
@@ -41,7 +40,7 @@
     </tr>
     {{/each}}
   <tr>
-    <td colspan="4">Total</td>
-    <td class="total">{{total}}</td>
+    <td colspan="3"><span class="pull-right" >TOTAL</span></td>
+    <td colspan="2" class="total">{{total}}</td>
   </tbody>
 </table>

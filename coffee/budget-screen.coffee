@@ -49,11 +49,11 @@ fillBudget = () ->
         specials : 0
         deliverables : 0
 
-    for key, item of HIS.state.special
+    for key, item of HIS.state.budget.special
         HIS.state.currentBudget.specials += item.value
 
     context =
-        special : HIS.state.special
+        specials : HIS.state.budget.special
         deliverables : (item for key, item of HIS.data.things when 'delivery' in item.keywords)
         total : 0
 
