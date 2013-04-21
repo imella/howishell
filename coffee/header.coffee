@@ -8,7 +8,6 @@ $ ->
     updateInterface()
     HIS.beforeMeeting()
     $("#header").on(".next-btn").click () =>
-        updateInterface()
         $("#screen-meeting, #screen-budget, #screen-moon").hide()
         switch screen
             when 'meeting'
@@ -24,6 +23,7 @@ $ ->
                 $("#screen-meeting").show('slide', {}, 500)
                 setupDialog()
                 screen = 'meeting'
+        updateInterface()
 
 updateInterface = ->
 
