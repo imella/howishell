@@ -10,6 +10,11 @@
   width: 70px;
   opacity: 0.5;
 }
+.area:hover{
+  background-color: black;
+  opacity: 0.3;
+}
+
 .area-corner {
   cursor: pointer;
   display: table-cell;
@@ -70,6 +75,10 @@
 
 .advisor .icon {
     font-size: 100px;
+}
+
+.center{
+  text-align: center;
 }
 
 #header {
