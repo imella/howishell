@@ -22,7 +22,7 @@ $ ->
       area = HIS.state.moon.cells[i*j]
       placeable = $.map(HIS.state.availableToPlace, (v)->v)
         .filter((t) -> t.id != 'scv')
-		.filter((t)-> t.quantity > 0)
+		    .filter((t)-> t.quantity > 0)
         .map((p)-> {thing: HIS.data.things[p.id], quantity: p.quantity})
       buildings = HIS.buildables()
       $('#area-info').html(Handlebars.templates['area.hb'](
