@@ -302,7 +302,7 @@ clearBudget = ->
   @place('cs', cellIndex)
   t = @data.things[thingId]
   if t.build.costs > 0
-    @HIS.state.budget.special.push {name: "Special equipement #{t.name}", value: t.build.costs}
+    HIS.state.budget.special.push {name: "Special equipement #{t.name}", value: t.build.costs}
   turnWhenReady = @state.turn + t.build.turns
   @state.events.push {turn: turnWhenReady, action: ((thingId, cellIndex) -> @place(thingId, cellIndex); @state.resources.robots += @data.things[thingId].build.robots), args: [thingId, cellIndex] }
 
