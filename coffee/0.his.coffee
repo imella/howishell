@@ -103,6 +103,8 @@ clearBudget = ->
 @HIS.state =
   turn: -1
   events: [] # [{turn: val, function}]
+  firstJakeQuestCompleted: 'notGiven'
+  secondJakeQuestCompleted: 'notGiven'
   resources:
     money: 10
     he3: 0
@@ -294,10 +296,14 @@ clearBudget = ->
   if t.build.costs > 0
     @HIS.state.budget.special.push {name: "Special equipement #{t.name}", value: t.build.costs}
   turnWhenReady = @state.turn + t.build.turns
+  @state.events.push {turn: turnWhenReady, action: ((thingId, cellIndex) -> @place(thingId, cellIndex); @state.resources.robots += @data.things[thingId].build.robots), args: [thingId, cellIndex] }
 
-  # FIXME! robots after build and maintenance
-
-  @state.events.push {turn: turnWhenReady, action: (() -> @place;), args: [thingId, cellIndex] }
+@HIS.buildables = ->
+  $.map(@data.things, (a) -> a)
+    .filter((t) -> 
+      return false if t.id is 'laser' and not (HIS.state.firstJakeQuestCompleted is 'given')
+      return false if t.id is 'shield' and not (HIS.state.secondJakeQuestCompleted is 'given')
+      t.build && HIS.checkBuildResources(t.id))
 
 @HIS.isPlaceable = (thingId, cellIndex) ->
   @state.moon.cells[cellIndex].thing == undefined &&
