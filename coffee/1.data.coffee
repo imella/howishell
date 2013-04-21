@@ -148,7 +148,7 @@
 #####################
 # SILOS             #
 #####################
-@HIS.data.things.smallSilo = @HIS.buildDef(0, [], 0, 0, 100, 0, 0,
+@HIS.data.things.smallSilo = @HIS.buildDef(0, [], 0, 1, 100, 0, 0,
     @HIS.maintenanceDef(1, 10, 0,
       @HIS.generatorDef(0, 0, 0, 0, 0, 200,
         @HIS.dataDef('smallSilo', 'Small Silo', 'icon-building', ['silo', 'energy', 'robots', 'storage'])
@@ -156,7 +156,7 @@
     )
   )
 
-@HIS.data.things.mediumSilo = @HIS.buildDef(0, [], 0, 0, 200, 0, 0,
+@HIS.data.things.mediumSilo = @HIS.buildDef(0, [], 0, 2, 200, 0, 0,
     @HIS.maintenanceDef(1, 20, 0,
       @HIS.generatorDef(0, 0, 0, 0, 0, 500,
         @HIS.dataDef('mediumSilo', 'Medium Silo', 'icon-building', ['silo', 'energy', 'robots', 'storage'])
@@ -164,7 +164,7 @@
     )
   )
 
-@HIS.data.things.bigSilo = @HIS.buildDef(0, [], 0, 0, 300, 0, 0,
+@HIS.data.things.bigSilo = @HIS.buildDef(0, [], 0, 3, 300, 0, 0,
     @HIS.maintenanceDef(1, 30, 0,
       @HIS.generatorDef(0, 0, 0, 0, 0, 800,
         @HIS.dataDef('bigSilo', 'Big Silo', 'icon-building', ['silo', 'energy', 'robots', 'storage'])
@@ -172,13 +172,13 @@
     )
   )
 
-@HIS.data.things.monkeys = @HIS.buildDef(500, ['waterExtractor'], 0, 0, 0, 0, 0,
+@HIS.data.things.monkeys = @HIS.buildDef(500, ['waterExtractor'], 0, 3, 0, 0, 0,
     @HIS.maintenanceDef(100, 0, 0,
       @HIS.dataDef('monkeys', 'Monkey Bio-Dome', 'icon-home', ['silo', 'energy'])
     )
   )
 
-@HIS.data.things.humans = @HIS.buildDef(800, ['waterExtractor'], 0, 0, 0, 0, 0,
+@HIS.data.things.humans = @HIS.buildDef(800, ['waterExtractor'], 0, 4, 0, 0, 0,
     @HIS.maintenanceDef(500, 0, 0,
       @HIS.dataDef('humans', 'Human Bio-Dome', 'icon-home', ['silo', 'energy'])
     )
