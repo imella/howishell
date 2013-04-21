@@ -20,7 +20,10 @@ $ ->
       i = $(@).data('i')
       j = $(@).data('j')
       area = HIS.state.moon.cells[i*j]
-      placeable = $.map(HIS.state.availableToPlace, (v)->v).filter((t)-> t.quantity > 0)
+      placeable = $.map(HIS.state.availableToPlace, (v)->v)
+        .filter((t) -> t.id != 'scv')
+		    .filter((t)-> t.quantity > 0)
+        .map((p)-> {thing: HIS.data.things[p.id], quantity: p.quantity})
       buildings = HIS.buildables()
       $('#area-info').html(Handlebars.templates['area.hb'](
         buildings: buildings
@@ -33,14 +36,16 @@ $ ->
       $('#area-info').on 'shown', ->
         $('.knob').knob(knobDefaults)
         $('.knob').show()
-        $('#build-in-area').on 'click', ->
-          console.log "Building"
-
         $('.building').on 'click', ->
-          console.log "asdasd"
-          $('.building').removeClass('selected')
-          $(@).addClass('selected')
-          $('#build-in-area').removeAttr('disabled');
+          thing = HIS.data.things[$(@).data('id')]
+          console.log ["build",thing, i*j]
+          HIS.build thing.id, i*j
+          $('#area-info').modal('hide')
+        $('.placeable').on 'click', ->
+          if $(@).data('quantity') > 0
+            console.log ["place",thing, i*j]
+            thing = HIS.data.things[$(@).data('id')]
+            HIS.placeFromAvailables thing.id, i*j
 
     $('.area').hover(->
         i = $(@).data('i')
