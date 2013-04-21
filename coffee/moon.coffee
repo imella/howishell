@@ -13,7 +13,6 @@ $ ->
                   j: j
                   id: i*j
                   area: HIS.state.moon.cells[j*9+i]
-    console.log moonMap
     $('#moon-areas').html(Handlebars.templates['moon.hb'](
       rows: moonMap.map((cells, i)-> {cells: cells, rowNumber: i}),
       colNumber: [0..8]))
@@ -67,7 +66,5 @@ $ ->
         $('.knob').knob(knobDefaults)
         $('.knob').show()).mouseleave ->
           renderMoonStats()
-  renderMoonMap()
-
 
   HIS.beforeMoonListener.push(renderMoonMap)
