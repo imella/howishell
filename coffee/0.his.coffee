@@ -230,14 +230,16 @@ clearBudget = ->
     .filter((c) -> c.thing.generator != undefined and c.thing.generator[keyword] != undefined )
     .map((c) -> resourceCalculator(c.thing.generator[keyword], c))
     .reduce(((m, b) -> m + b), 0)
-  outputByResource = (keyword) ->
+  outputByResource = (keyword, resourceCalculator) ->
+    if resourceCalculator == undefined
+      resourceCalculator = (r, c) ->  r
     @HIS.findCellsByKeyword(keyword)
     .filter((c) -> c.thing.maintenance != undefined and c.thing.maintenance[keyword] != undefined )
-    .map((c) -> c.thing.maintenance[keyword])
+    .map((c) -> resourceCalculator(c.thing.maintenance[keyword], c))
     .reduce(((m, b) -> m + b), 0)
 
   ei = inputByResource('energy', (r, c) -> r)
-  eo = outputByResource('energy')
+  eo = outputByResource('energy', (r, c) -> if c.thing.working then r else 0)
 
   si = inputByResource('storage', (r, c) -> r)
   so = outputByResource('storage')
@@ -294,15 +296,15 @@ clearBudget = ->
 # and schedules an event that will create the thing when its done.
 @HIS.build = (thingId, cellIndex) ->
   @discountBuildResources(thingId)
+  @place('cs', cellIndex)
+  t = @data.things[thingId]
+  if t.build.costs > 0
+    HIS.state.budget.special.push {name: "Special equipement #{t.name}", value: t.build.costs}
   if t.id is 'laser'
     @state.firstJakeQuestCompleted = 'completed'
   if t.id is 'shield'
     @state.secondJakeQuestCompleted = 'completed'
     @win("Defense and Expansion")
-  @place('cs', cellIndex)
-  t = @data.things[thingId]
-  if t.build.costs > 0
-    HIS.state.budget.special.push {name: "Special equipement #{t.name}", value: t.build.costs}
   turnWhenReady = @state.turn + t.build.turns
   @state.events.push {turn: turnWhenReady, action: ((thingId, cellIndex) -> @place(thingId, cellIndex); @state.resources.robots += @data.things[thingId].build.robots), args: [thingId, cellIndex] }
 
