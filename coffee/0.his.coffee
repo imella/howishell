@@ -129,7 +129,7 @@ clearBudget = ->
     'cs':
       id: 'cs'
       name: 'Construction Site'
-      image_url: 'construction-site.png'
+      image_url: 'icon-cloud-upload'
       keywords: []
 
   advisors:
