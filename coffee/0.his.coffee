@@ -48,14 +48,23 @@ defCell = ->
       alumina: Number((alumina).toFixed(1))
   }
 
+initialAvailableToPlace = () ->
+  (i for k,i of @HIS.data.things when 'delivery' in i.keywords).reduce(((m, i) -> m[i.id] = {id: i.id, quantity: 0}; m),{})
+
 # beforeMeetingListener Functions
 updateState = ->
   console.log "Updating Game State"
+  @HIS.state.availableToPlace ?= initialAvailableToPlace()
+
   @HIS.state.turn++
   @HIS.state.events
     .filter((e) -> e.turn is @HIS.state.turn)
     .map((e) -> e.action.apply(@HIS, e.args))
   # delete old events :-)
+
+  # Reduce batteries
+  for battery in @HIS.findCellsByThingId('battery')
+    battery.thing.generator.energy -= 1 if battery.thing.generator.energy > 0 
 
 # beforeBudgetListener Functions
 
@@ -63,9 +72,18 @@ updateState = ->
 # beforeMoonListener Functinos
 addBuget = ->
   console.log "Adding budget to the moon"
+  for k, i of @HIS.state.budget.regular
+    @HIS.state.availableToPlace[i.id].quantity += i.quantity
+  
+  # I add the robots sent directly to the state
+  @HIS.state.resources.robots += @HIS.state.availableToPlace.scv.quantity
+  @HIS.state.availableToPlace.scv.quantity = 0
+
 
 clearBudget = ->
   console.log "Clearing budget array"
+  @HIS.state.budget.regular = initialAvailableToPlace()
+  @HIS.state.budget.special = []
 
 @HIS =
   beforeMeetingListener: [updateState] # Array of functions
@@ -91,6 +109,7 @@ clearBudget = ->
     aluminum: 0
     silicon: 0
     bricks: 0
+    robots: 0
   moon: initializeMoon(12, 8)
   currentDialog:
     guided: ''
@@ -243,25 +262,36 @@ clearBudget = ->
       gross: si - so
   }
 
-# Checks if the thing is affordable and other conditions
-@HIS.isAffordable = (id, cellIndex) ->
-  # Check resources
+@HIS.checkBuildResources = (thingId) ->
+  @data.things[thingId].build.costs <= @state.resources.money && 
+    @data.things[thingId].build.aluminum <= @state.resources.aluminum && 
+    @data.things[thingId].build.silicon <= @state.resources.silicon && 
+    @data.things[thingId].build.bricks <= @state.resources.bricks && 
+    @data.things[thingId].build.robots <= @state.resources.robots
+
+@HIS.discountBuildResources = (thingId) ->
+  @state.resources.money -= @data.things[thingId].build.costs
+  @state.resources.aluminum -= @data.things[thingId].build.aluminum
+  @state.resources.silicon -= @data.things[thingId].build.silicon
+  @state.resources.bricks -= @data.things[thingId].build.bricks
 
 @HIS.isBuildable = (thingId, cellIndex) ->
-  if @isAffordable(thingId, cellIndex)
-    # Check if spot is available
-    # Check if buildable
-  else
-    false
+  @checkBuildResources(thingId) &&
+    @HIS.state.moon.cells[cellIndex].thing == undefined &&
+    'build' in @HIS.data.things[thingId].keywords
 
-@HIS.create = (thingId) ->
+@HIS.createSCV = ()->
+  discountBuildResources('scv')
+  @state.resources.robots++
 
 # Places a Construction site in the cell (specified with the index)
 # and schedules an event that will create the thing when its done.
 @HIS.build = (thingId, cellIndex) ->
-  # Discount resources
+  discountBuildResources(thingId)
   @place('cs', cellIndex)
   t = @data.things[thingId]
+  if t.build.costs > 0
+    @HIS.state.budget.special.push {name: "Special equipement #{t.name}", value: t.build.costs}
   turnWhenReady = @state.turn + t.build.turns
   @state.events.push {turn: turnWhenReady, action: @place, args: [thingId, cellIndex] }
 
