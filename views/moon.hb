@@ -17,7 +17,6 @@
       </div>
       {{#each cells}}
         <div class="area" data-i="{{i}}" data-j="{{j}}">
-          {{this}}
         </div>
       {{/each}}
     </div>
