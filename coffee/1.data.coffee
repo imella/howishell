@@ -47,7 +47,7 @@
 @HIS.data.things.aluminumExtractor = @HIS.buildDef(20, ['basicPrinter'], 4, 3, 100, 0, 0,
     @HIS.maintenanceDef(50, 5, 0,
       @HIS.generatorDef(0, 0, 0, 3, 0, 0,
-        @HIS.dataDef('aluminumExtractor', 'Aluminum Extractor', 'icon-paperclip', ['energy', 'aluminum', 'robots'])
+        @HIS.dataDef('aluminumExtractor', 'Aluminum Extractor', 'icon-paper-clip', ['energy', 'aluminum', 'robots'])
       )
     )
   )
