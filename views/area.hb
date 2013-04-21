@@ -37,7 +37,8 @@
     </div>
     {{/with}}
   </div>
-  <h4>Available to place</h4>
+  {{#unless area.thing}}
+    <h4>Available to place</h4>
     <div class="row-fluid">
       {{#each placeable}}
         <div class="span3 well center placeable pointer" data-id="{{thing.id}}"
@@ -49,16 +50,18 @@
         </div>
       {{/each}}
     </div>
-  <h4>Buildings</h4>
+  {{/unless}}
 </div>
 <div class="modal-body">
   {{#if area.thing}}
     {{#with area.thing}}
-      <div class="switch" data-on="success" data-off="warning">
+      <h3><i class="icon {{image_url}}"></i> {{name}}</h3>
+      <div class="switch" data-on="success" data-off="error">
           <input type="checkbox" checked />
       </div>
     {{/with}}
   {{else}}
+    <h4>Buildings</h4>
     <table id="buildings" class="table table-hover table-striped">
       <tbody>
         {{#each buildings}}
