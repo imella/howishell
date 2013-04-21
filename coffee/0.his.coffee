@@ -64,7 +64,7 @@ updateState = ->
 
   # Reduce batteries
   for battery in @HIS.findCellsByThingId('battery')
-    battery.generator.energy -= 1 if battery.generator.energy > 0 
+    battery.thing.generator.energy -= 1 if battery.thing.generator.energy > 0 
 
 # beforeBudgetListener Functions
 
