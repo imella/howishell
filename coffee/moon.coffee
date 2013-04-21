@@ -1,4 +1,8 @@
 $ ->
+  renderMoonStats = ->
+    state = HIS.resourceStatus()
+    context = {resources: HIS.resourceStatus(), state: HIS.state}
+    $("#area-stats").html(Handlebars.templates['globalStats.hb'](context))
   renderMoonMap = ->
     moonMap = [0..7].map (i)->
                 [0..8].map (j)->
@@ -9,6 +13,8 @@ $ ->
     $('#moon-areas').html(Handlebars.templates['moon.hb'](
       rows: moonMap.map((cells, i)-> {cells: cells, rowNumber: i}),
       colNumber: [0..8]))
+
+    renderMoonStats()
 
     $('.area').on 'click', ->
       i = $(@).data('i')
@@ -50,5 +56,5 @@ $ ->
         $('.knob').hide()
         $('.knob').knob(knobDefaults)
         $('.knob').show()).mouseleave ->
-          $('#area-stats').empty()
+          renderMoonStats()
   renderMoonMap()
