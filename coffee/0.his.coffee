@@ -66,6 +66,15 @@ updateState = ->
   for battery in @HIS.findCellsByThingId('battery')
     battery.thing.generator.energy -= 1 if battery.thing.generator.energy > 0
 
+  resourceChange = @HIS.resourceStatus()
+  for k in ['aluminum', 'bricks', 'he3', 'silicon']
+    change = ( (resourceChange[k].input ? 0) - (resourceChange[k].output ? 0)  )
+    console.log "added #{( (resourceChange[k].input ? 0) - (resourceChange[k].output ? 0)  )} k"
+    @HIS.state.resources[k] += change
+    
+
+
+
 # beforeBudgetListener Functions
 
 

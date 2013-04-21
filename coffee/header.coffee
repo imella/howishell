@@ -30,8 +30,15 @@ $ ->
 
 updateInterface = ->
 
-    state = HIS.resourceStatus()
-    context = {resources: HIS.resourceStatus(), state: HIS.state}
+    resources = HIS.resourceStatus()
+    for k, res of resources
+        res.input = Math.floor(res.input*10)/10 if res.input
+        res.output = Math.floor(res.output*10)/10 if res.output
+        res.gross = Math.floor(res.gross*10)/10 if res.gross
+        res.total = Math.floor(res.total*10)/10 if res.total
+
+
+    context = {resources: resources, state: HIS.state}
     $("#header").html(Handlebars.templates['header.hb'](context))
 
 
