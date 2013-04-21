@@ -254,19 +254,22 @@ clearBudget = ->
   else
     false
 
+@HIS.create = (thingId) ->
+
 # Places a Construction site in the cell (specified with the index)
 # and schedules an event that will create the thing when its done.
 @HIS.build = (thingId, cellIndex) ->
   # Discount resources
-  @place(@.data.things.cs)
-  t = @.data.things[thingId]
-  turnWhenReady = @.state.turn + t.build.turns
-  @.state.events.push {turn: turnWhenReady, action: @place, args: [thingId, cellIndex] }
+  @place('cs', cellIndex)
+  t = @data.things[thingId]
+  turnWhenReady = @state.turn + t.build.turns
+  @state.events.push {turn: turnWhenReady, action: @place, args: [thingId, cellIndex] }
 
 
 # Places a thing in the map
 @HIS.place = (thingId, cellIndex) ->
-  cell = @.state.moon.cells[cellIndex]
-  cell['thing'] = @.data.things[thingId]
+  console.log "place thingId=#{thingId} cellIndex=#{cellIndex}"
+  cell = @state.moon.cells[cellIndex]
+  cell['thing'] = @data.things[thingId]
   # cell.thing['state'] = cell.thing.initialState
   cell

@@ -7,28 +7,30 @@ $ ->
     screen = 'meeting'
     $("#screen-meeting").show()
     setupDialog()
-    updateResources()
+    updateInterface()
 
-    $("#next-btn").click () =>
-        updateResources()
+    $("#header").on(".next-btn").click () =>
+        updateInterface()
         $("#screen-meeting, #screen-budget, #screen-moon").hide()
         switch screen
             when 'meeting'
+                HIS.beforeBudget()
                 $("#screen-budget").show()
                 screen = 'budget'
             when 'budget'
+                HIS.beforeMoon()
                 $("#screen-moon").show()
                 screen = 'moon'
             when 'moon'
+                HIS.beforeMeeting()
                 $("#screen-meeting").show()
-                HIS.state.turn++
                 setupDialog()
                 screen = 'meeting'
 
-updateResources = ->
+updateInterface = ->
 
     state = HIS.resourceStatus()
-    context = {status: HIS.resourceStatus(), money: HIS.state.resources.money}
+    context = {resources: HIS.resourceStatus(), state: HIS.state}
     $("#header").html(Handlebars.templates['header.hb'](context))
     
 

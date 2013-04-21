@@ -71,3 +71,12 @@
 .advisor .icon {
     font-size: 100px;
 }
+
+#header {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#header #resource-status {
+  margin-top: 10px;
+}
