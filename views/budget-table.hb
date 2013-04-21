@@ -31,10 +31,10 @@
       <td>{{delivery.costs}}</td>
       <td class="total-cost">0</td>
       <td>
-        <a href="#" class="btn">
+        <a href="#" class="btn add">
           <i class="icon icon-plus"></i>
         </a>
-        <a href="#" class="btn">
+        <a href="#" class="btn remove">
           <i class="icon icon-minus""></i>
         </a>
       </td>
