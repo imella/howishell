@@ -62,6 +62,10 @@ updateState = ->
     .map((e) -> e.action.apply(@HIS, e.args))
   # delete old events :-)
 
+  # Reduce batteries
+  for battery in @HIS.findCellsByThingId('battery')
+    battery.thing.generator.energy -= 1 if battery.thing.generator.energy > 0 
+
 # beforeBudgetListener Functions
 
 
