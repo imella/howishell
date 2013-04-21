@@ -4,9 +4,9 @@ $ ->
     $("#screen-meeting, #screen-budget, #screen-moon").hide()
     screen = 'meeting'
     HIS.beforeMeeting()
-    $("#screen-meeting").show()
-    setupDialog()
+    $("#screen-meeting").show()    
     updateInterface()
+    setupDialog()
 
     
     $("#header").on(".next-btn").click () =>
@@ -41,7 +41,7 @@ setupDialog = ->
     $("#advisors, #advisors .advisor").unbind('click')
     $("#advisor .advisor").removeClass('idle').popover('destroy')
     $("#advisor").off('click')
-
+    console.log "set up dialog"
     conversation = getDialogs()
     console.log conversation.nonGuided
 

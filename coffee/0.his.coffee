@@ -36,9 +36,9 @@ initializeMoon = (width, height) ->
 
 
 defCell = ->
-  silica = Math.random() * 0.45
-  he3 = Math.random() * 0.01
-  alumina = Math.random() * 0.15
+  silica = Math.random() * 0.5
+  he3 = Math.random() * 0.2
+  alumina = Math.random() * 0.3
   rock = 1 - silica - he3 - alumina
   {
     resourceDensity:
@@ -106,11 +106,11 @@ clearBudget = ->
   firstJakeQuestCompleted: 'notGiven'
   secondJakeQuestCompleted: 'notGiven'
   resources:
-    money: 10
+    money: 300
     he3: 0
-    aluminum: 0
-    silicon: 0
-    bricks: 0
+    aluminum: 50
+    silicon: 50
+    bricks: 150
     robots: 0
   moon: initializeMoon(12, 8)
   currentDialog:
@@ -326,6 +326,10 @@ clearBudget = ->
 @HIS.place = (thingId, cellIndex) ->
   console.log "place thingId=#{thingId} cellIndex=#{cellIndex}"
   cell = @state.moon.cells[cellIndex]
-  cell['thing'] = @data.things[thingId]
+  t = @data.things[thingId]
+  s = {}
+  s = {working: false} if 'maintenance' in t.keywords
+
+  cell['thing'] = $.extend(true, s, t)
   # cell.thing['state'] = cell.thing.initialState
   cell
