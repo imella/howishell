@@ -1,9 +1,9 @@
 createRexDialog = ->
 	message = []
-	if @HIS.findCellsByThingId('vacuum').size is 0
+	if @HIS.findCellsByThingId('vacuum').length is 0
 		message.push "I think that a #{@HIS.data.things.vacuum.name} could help us start the He3 harvest."
 	
-	if @HIS.findCellsByThingId('bulldozer').size is 0 and @HIS.state.turn > 10
+	if @HIS.findCellsByThingId('bulldozer').length is 0 and @HIS.state.turn > 10
 		message.push "I think that a #{@HIS.data.things.bulldozer.name} could greately improve our He3 income."
 	
 	if @HIS.resourceStatus().energy.gross <= 0
@@ -16,15 +16,15 @@ createYrionDialog = ->
 	if @HIS.state.turn < 10
 		message.push "We need more money to begin our research on colonization."
 	
-	if @HIS.findCellsByThingId('h2o').size is 0
+	if @HIS.findCellsByThingId('h2o').length is 0
 		message.push "In order to populate the moon, we need water."
-		if @HIS.findCellsByThingId('printer1').size is 0
-			message.push "To create the water refinery, we need to create a #{@HIS.data.things.printer1.name}."
+		if @HIS.findCellsByThingId('basicPrinter').length is 0
+			message.push "To create the water refinery, we need to create a #{@HIS.data.things.basicPrinter.name}."
 		else
-			if @HIS.findCellsByThingId('printer2').size is 0 
+			if @HIS.findCellsByThingId('printer2').length is 0 
 				message.push "We need a more advanced printer to build the H2O refinery."
 	else
-		if @HIS.findCellsByThingId('monkeys').size is 0 
+		if @HIS.findCellsByThingId('monkeys').length is 0 
 			if @HIS.resources.money < @HIS.data.things.monkeys.delivery.costs * 0.2
 				message.push " In order to send the monkeys, we need more money"
 			else if @HIS.resources.money < @HIS.data.things.monkeys.delivery.costs * 0.8
@@ -94,12 +94,12 @@ createWalloDialogs = ->
 # Entrega misiones, pero estas tienen un tiempo mas libre para llevarlas a cabo.
 createTelescopeDialogs = ->
 	message = []
-	currentAntenas = @HIS.findCellsByThingId('comms').size
+	currentAntenas = @HIS.findCellsByKeyword('communication').length
 	expectedAntenas = @HIS.state.turn * 0.15
 	if currentAntenas < expectedAntenas
 		message.push "We could be receiving signals from outer space right now."
 		message.push "Acording to my schedules, we need #{expectedAntenas}, but we currently only have #{currentAntenas}."
-		message.push "I think that a #{@HIS.data.things.comms.name} is nedeed."
+		message.push "I think that a Antena is nedeed."
 	else
 		message.push "Our outer space exploration is going very good. Nice!"
 	message
