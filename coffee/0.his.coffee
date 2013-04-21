@@ -291,6 +291,14 @@ clearBudget = ->
   turnWhenReady = @state.turn + t.build.turns
   @state.events.push {turn: turnWhenReady, action: @place, args: [thingId, cellIndex] }
 
+@HIS.isPlaceable = (thingId, cellIndex) ->
+  @state.moon.cells[cellIndex].thing == undefined &&
+    'delivery' in @HIS.data.things[thingId].keywords &&
+    @state.availableToPlace[thingId].quantity > 0
+
+@HIS.placeFromAvailables = (thingId, cellIndex) ->
+  @place(thingId, cellIndex)
+  @state.availableToPlace[thingId].quantity--
 
 # Places a thing in the map
 @HIS.place = (thingId, cellIndex) ->
