@@ -37,32 +37,32 @@
     </div>
     {{/with}}
   </div>
-  <h4>Prefabrecated</h4>
-  <table class="table">
-    <thead>
-      <td></td>
-      <td></td>
-    </thead>
-    <tbody>
+  <h4>Available to place</h4>
+    <div class="row-fluid">
       {{#each placeable}}
-        <tr>
-          <td></td>
-          <td></td>
-        </tr>
+        <div class="span3 well center placeable pointer" data-id="{{thing.id}}"
+          data-quantity="{{quantity}}">
+          <i class="icon {{thing.image_url}}"></i>
+          <strong>{{thing.name}}</strong>
+          <br>
+          <strong>x {{quantity}}</strong>
+        </div>
       {{/each}}
-    </tbody>
-  </table>
+    </div>
   <h4>Buildings</h4>
 </div>
 <div class="modal-body">
   {{#if area.thing}}
     {{#with area.thing}}
+      <div class="switch" data-on="success" data-off="warning">
+          <input type="checkbox" checked />
+      </div>
     {{/with}}
   {{else}}
     <table id="buildings" class="table table-hover table-striped">
       <tbody>
         {{#each buildings}}
-          <tr class="building pointer">
+          <tr class="building pointer" data-id="{{id}}">
             <td class="center">
               <i class="icon icon-4x {{image_url}}"></i>
               <br>
@@ -115,6 +115,4 @@
   {{/if}}
 </div>
 <div class="modal-footer">
-  <button id="build-in-area" data-dismiss="modal" aria-hidden="true"
-    class="disabled btn btn-large btn-primary">Build</button>
 </div>
