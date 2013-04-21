@@ -36,7 +36,7 @@
     )
   )
 
-@HIS.data.things.drill = @HIS.buildDef(10, [], 4, 2, 0, 0, 0,
+@HIS.data.things.drill = @HIS.buildDef(10, [], 1, 2, 0, 0, 0,
     @HIS.maintenanceDef(12, 1, 0,
       @HIS.generatorDef(0, 0, 20, 0, 0, 0,
         @HIS.dataDef('drill', 'Super Drill', 'icon-pushpin', ['drill', 'bricks', 'energy', 'robots'])
