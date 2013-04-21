@@ -56,7 +56,7 @@ createJakeDialog = ->
 		message.push "If we build the #{@HIS.data.things.laser.name}, the earth goverment is going to pay us 1000 credits."
 		message.push "The ugly part is that we only have 5 turns to acomplish this."
 		message.push "With your help we can make it!."
-	if @HIS.state.turn < 20
+	if @HIS.state.turn < 20 and @HIS.state.firstJakeQuestCompleted is 'given'
 		message.push "Hurry up!, we only have till turn 20 to build the #{@HIS.data.things.laser.name}."
 	if @HIS.state.turn is 20
 		if @HIS.state.firstJakeQuestCompleted is 'completed'
