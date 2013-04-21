@@ -316,7 +316,7 @@ clearBudget = ->
     .filter((t) ->
       return false if t.id is 'laser' and not (HIS.state.firstJakeQuestCompleted is 'given')
       return false if t.id is 'shield' and not (HIS.state.secondJakeQuestCompleted is 'given')
-      t.build && HIS.checkBuildResources(t.id))
+      t.build && HIS.checkBuildResources(t.id) && 'build' in @HIS.data.things[thingId].keywords )
 
 @HIS.isPlaceable = (thingId, cellIndex) ->
   @state.moon.cells[cellIndex].thing == undefined &&
