@@ -270,6 +270,7 @@ clearBudget = ->
   @state.resources.aluminum -= @data.things[thingId].build.aluminum
   @state.resources.silicon -= @data.things[thingId].build.silicon
   @state.resources.bricks -= @data.things[thingId].build.bricks
+  @state.resources.robots -= @data.things[thingId].build.robots
 
 @HIS.isBuildable = (thingId, cellIndex) ->
   @checkBuildResources(thingId) &&
@@ -289,7 +290,10 @@ clearBudget = ->
   if t.build.costs > 0
     @HIS.state.budget.special.push {name: "Special equipement #{t.name}", value: t.build.costs}
   turnWhenReady = @state.turn + t.build.turns
-  @state.events.push {turn: turnWhenReady, action: @place, args: [thingId, cellIndex] }
+
+  # FIXME! robots after build and maintenance
+
+  @state.events.push {turn: turnWhenReady, action: (() -> @place;), args: [thingId, cellIndex] }
 
 @HIS.isPlaceable = (thingId, cellIndex) ->
   @state.moon.cells[cellIndex].thing == undefined &&
