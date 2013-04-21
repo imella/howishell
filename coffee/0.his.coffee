@@ -70,11 +70,16 @@ addBuget = ->
   console.log "Adding budget to the moon"
   for k, i of @HIS.state.budget.regular
     @HIS.state.availableToPlace[i.id].quantity += i.quantity
+  
+  # I add the robots sent directly to the state
+  @HIS.state.resources.robots += @HIS.state.availableToPlace.scv.quantity
+  @HIS.state.availableToPlace.scv.quantity = 0
 
 
 clearBudget = ->
   console.log "Clearing budget array"
   @HIS.state.budget.regular = initialAvailableToPlace()
+  @HIS.state.budget.special = []
 
 @HIS =
   beforeMeetingListener: [updateState] # Array of functions
@@ -267,22 +272,22 @@ clearBudget = ->
   @state.resources.bricks -= @data.things[thingId].build.bricks
 
 @HIS.isBuildable = (thingId, cellIndex) ->
-  if @checkBuildResources(thingId)
-    # Check if spot is available
-    # Check if buildable
-  else
-    false
+  @checkBuildResources(thingId) &&
+    @HIS.state.moon.cells[cellIndex].thing == undefined &&
+    'build' in @HIS.data.things[thingId].keywords
 
-@HIS.buildSCV = ()->
+@HIS.createSCV = ()->
   discountBuildResources('scv')
   @state.resources.robots++
 
 # Places a Construction site in the cell (specified with the index)
 # and schedules an event that will create the thing when its done.
 @HIS.build = (thingId, cellIndex) ->
-  # Discount resources
+  discountBuildResources(thingId)
   @place('cs', cellIndex)
   t = @data.things[thingId]
+  if t.build.costs > 0
+    @HIS.state.budget.special.push {name: "Special equipement #{t.name}", value: t.build.costs}
   turnWhenReady = @state.turn + t.build.turns
   @state.events.push {turn: turnWhenReady, action: @place, args: [thingId, cellIndex] }
 
